@@ -9,6 +9,7 @@
 | --- | --- | --- |
 | Shadowrocket | [Скачать конфиг](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/shadowrocket/neplach-routing.conf) | `.conf` с правилами: РФ и локальная сеть напрямую, Telegram/заблокированные ресурсы через proxy, остальное через proxy |
 | Karing | [Скачать JSON](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json) | `diversion_rules_custom.json` с custom diversion rules |
+| HAPP | [Открыть инструкцию](docs/happ.md) | инструкция по добавлению routing-конфига в HAPP |
 
 ## Как обновлять
 
@@ -36,12 +37,19 @@ deep link `karing://install-config?...`, но для этого файла на�
 
 Подробнее: [docs/karing.md](docs/karing.md).
 
+## HAPP
+
+Открой [docs/happ.md](docs/happ.md) на устройстве, где установлен HAPP. Там
+лежит короткая инструкция по добавлению routing-конфига в клиент.
+
+Подробнее: [docs/happ.md](docs/happ.md).
+
 ## Безопасность
 
 Не добавляй сюда:
 
-- WireGuard `.conf` с приватным ключом;
-- Amnezia/OpenVPN/WireGuard профили с ключами;
+- VPN-профили с приватными ключами;
 - подписки, где внутри есть персональные серверы, UUID, токены или пароли.
 
-Такие файлы должны оставаться локально или в приватном репозитории.
+Такие файлы должны оставаться локально, например в `local/archive/`, или в
+приватном репозитории.
