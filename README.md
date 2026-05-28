@@ -48,40 +48,29 @@
 
 ## 3. Routing-конфиги
 
-Routing-конфиг можно добавить после первичной настройки VPN. Для HAPP это
-отдельный routing-профиль: HAPP поддерживает добавление через буфер обмена,
-QR-код или deeplink вида `happ://routing/onadd/...`.
+Routing-конфиг добавляется после первичной настройки VPN и задаёт правила
+трафика: российские IP, домены `.ru`, `.su`, `.рф` и российские сервисы идут
+напрямую; зарубежные домены — через VPN; заблокированные сервисы явно выведены
+в proxy.
 
-Логика правил: локальная сеть, российские IP, домены `.ru`, `.su`, `.рф` и
-российские сервисы с международными доменами идут напрямую. Зарубежные домены
-по умолчанию идут через VPN. Заблокированные сервисы и медиа вынесены в proxy
-явно и стоят выше direct-правил.
+### HAPP
 
-| Клиент | Добавить / скачать | Как использовать |
+Открой страницу и нажми одну кнопку — роутинг добавится автоматически:
+
+**[→ Добавить роутинг в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html)**
+
+Если кнопка не сработала, на странице есть раздел «Не открылось?» с двумя
+запасными способами: скопировать ссылку для ручного открытия или скачать
+JSON-файл для импорта.
+
+### Другие клиенты
+
+Для Shadowrocket и Karing — только если ты уже пользуешься одним из них:
+
+| Клиент | Файл | Как добавить |
 | --- | --- | --- |
-| HAPP | [открыть страницу добавления](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html) / [скачать JSON](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/happ/neplach-routing.json) | нажать кнопку `Добавить в HAPP` на странице; если не открылось, скачать JSON и импортировать его как routing-профиль |
-| Shadowrocket | [скачать routing `.conf`](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/shadowrocket/neplach-routing.conf) | `Config` -> `+` -> `Download from URL` / `Import from URL`, затем вставить ссылку |
-| Karing | [скачать routing JSON](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json) | добавить raw-ссылку как remote rule set или импортировать скачанный JSON в custom rules |
-
-Прямые ссылки:
-
-HAPP JSON:
-
-```text
-https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/happ/neplach-routing.json
-```
-
-Shadowrocket:
-
-```text
-https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/shadowrocket/neplach-routing.conf
-```
-
-Karing:
-
-```text
-https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json
-```
+| Shadowrocket | [neplach-routing.conf](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/shadowrocket/neplach-routing.conf) | `Config` → `+` → `Download from URL`, вставить ссылку |
+| Karing | [diversion_rules_custom.json](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json) | добавить raw-ссылку как remote rule set или импортировать JSON в custom rules |
 
 ## Безопасность
 

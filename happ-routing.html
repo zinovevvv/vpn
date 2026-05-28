@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Neplach routing для HAPP</title>
+    <title>Роутинг для HAPP — Neplach</title>
     <style>
       :root {
         color-scheme: light dark;
@@ -14,6 +14,7 @@
         --line: #d9dee7;
         --accent: #1769e0;
         --accent-fg: #ffffff;
+        --accent-dim: #e8f0fe;
       }
 
       @media (prefers-color-scheme: dark) {
@@ -25,12 +26,11 @@
           --line: #303744;
           --accent: #7ab0ff;
           --accent-fg: #08111f;
+          --accent-dim: #1a2740;
         }
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       body {
         margin: 0;
@@ -45,111 +45,188 @@
       }
 
       main {
-        width: min(100%, 560px);
+        width: min(100%, 480px);
         padding: 28px;
         border: 1px solid var(--line);
-        border-radius: 8px;
+        border-radius: 12px;
         background: var(--panel);
       }
 
       h1 {
-        margin: 0 0 12px;
-        font-size: 26px;
+        margin: 0 0 6px;
+        font-size: 22px;
         line-height: 1.2;
       }
 
-      p {
-        margin: 0 0 18px;
+      .subtitle {
+        margin: 0 0 24px;
         color: var(--muted);
+        font-size: 15px;
       }
 
-      .actions {
-        display: grid;
-        gap: 10px;
-      }
+      /* --- главная кнопка --- */
 
-      a,
-      button {
-        min-height: 46px;
-        display: inline-flex;
+      #open-happ {
+        display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 8px;
-        font: inherit;
-        font-weight: 650;
-        text-decoration: none;
-        cursor: pointer;
-      }
-
-      .primary {
+        width: 100%;
+        min-height: 52px;
+        border-radius: 10px;
         border: 0;
         background: var(--accent);
         color: var(--accent-fg);
+        font: inherit;
+        font-size: 16px;
+        font-weight: 650;
+        text-decoration: none;
+        cursor: pointer;
+        transition: opacity 0.15s;
+      }
+
+      #open-happ[aria-disabled="true"] {
+        opacity: 0.45;
+        cursor: default;
+        pointer-events: none;
+      }
+
+      /* --- блок «Не открылось?» --- */
+
+      details {
+        margin-top: 20px;
+      }
+
+      summary {
+        font-size: 14px;
+        color: var(--muted);
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        user-select: none;
+      }
+
+      summary::-webkit-details-marker { display: none; }
+
+      summary::before {
+        content: "▸";
+        font-size: 10px;
+        transition: transform 0.15s;
+        display: inline-block;
+      }
+
+      details[open] summary::before {
+        transform: rotate(90deg);
+      }
+
+      .fallback-actions {
+        margin-top: 12px;
+        display: grid;
+        gap: 8px;
+      }
+
+      .fallback-note {
+        margin: 10px 0 0;
+        font-size: 13px;
+        color: var(--muted);
       }
 
       .secondary {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        border-radius: 8px;
         border: 1px solid var(--line);
         background: transparent;
         color: var(--fg);
+        font: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 0.1s;
       }
 
-      .status {
-        min-height: 22px;
+      .secondary:hover { background: var(--accent-dim); }
+
+      /* --- статус ошибки --- */
+
+      .error-msg {
         margin-top: 16px;
+        padding: 12px 14px;
+        border-radius: 8px;
+        background: var(--accent-dim);
         font-size: 14px;
+        color: var(--muted);
+        display: none;
       }
+
+      .error-msg.visible { display: block; }
     </style>
   </head>
   <body>
     <main>
-      <h1>Neplach routing для HAPP</h1>
-      <p>Кнопка добавит актуальный routing-профиль из публичного JSON.</p>
+      <h1>Роутинг для HAPP</h1>
+      <p class="subtitle">Нажми кнопку — откроется HAPP и роутинг добавится автоматически.</p>
 
-      <div class="actions">
-        <a id="open-happ" class="primary" href="#" aria-disabled="true">Добавить в HAPP</a>
-        <button id="copy-link" class="secondary" type="button" disabled>Скопировать deeplink</button>
-        <a class="secondary" href="configs/happ/neplach-routing.json">Скачать JSON</a>
-      </div>
+      <a id="open-happ" href="#" aria-disabled="true">Загружаю…</a>
 
-      <p id="status" class="status">Готовлю ссылку...</p>
+      <details id="fallback" hidden>
+        <summary>Не открылось?</summary>
+        <div class="fallback-actions">
+          <button id="copy-link" class="secondary" type="button">Скопировать ссылку — вставить в браузере</button>
+          <a class="secondary" href="configs/happ/neplach-routing.json">Скачать JSON-файл</a>
+        </div>
+        <p class="fallback-note">
+          Скопируй ссылку и открой её в адресной строке браузера,<br>
+          или скачай файл и импортируй в HAPP вручную.
+        </p>
+      </details>
+
+      <p id="error-msg" class="error-msg"></p>
     </main>
 
     <script>
-      const openHapp = document.getElementById("open-happ");
-      const copyLink = document.getElementById("copy-link");
-      const status = document.getElementById("status");
+      const openHapp  = document.getElementById("open-happ");
+      const copyLink  = document.getElementById("copy-link");
+      const fallback  = document.getElementById("fallback");
+      const errorMsg  = document.getElementById("error-msg");
 
       function utf8Base64(value) {
         const bytes = new TextEncoder().encode(value);
         let binary = "";
-        for (const byte of bytes) {
-          binary += String.fromCharCode(byte);
-        }
+        for (const byte of bytes) binary += String.fromCharCode(byte);
         return btoa(binary);
       }
 
       async function init() {
         try {
-          const response = await fetch("configs/happ/neplach-routing.json", {
-            cache: "no-store"
-          });
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-          }
+          const response = await fetch("configs/happ/neplach-routing.json", { cache: "no-store" });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-          const profile = await response.json();
+          const profile  = await response.json();
           const deeplink = `happ://routing/onadd/${utf8Base64(JSON.stringify(profile))}`;
 
           openHapp.href = deeplink;
+          openHapp.textContent = "Добавить в HAPP";
           openHapp.removeAttribute("aria-disabled");
-          copyLink.disabled = false;
+
+          fallback.hidden = false;
+
           copyLink.addEventListener("click", async () => {
             await navigator.clipboard.writeText(deeplink);
-            status.textContent = "Deeplink скопирован.";
+            copyLink.textContent = "Скопировано ✓";
+            setTimeout(() => { copyLink.textContent = "Скопировать ссылку — вставить в браузере"; }, 2000);
           });
-          status.textContent = "Ссылка готова.";
-        } catch (error) {
-          status.textContent = "Не удалось подготовить ссылку. Скачай JSON и импортируй его в HAPP.";
+
+        } catch {
+          openHapp.textContent = "Не удалось загрузить";
+          fallback.hidden = false;
+          fallback.open  = true;
+          errorMsg.textContent = "Профиль не загрузился. Скачай JSON-файл ниже и импортируй его в HAPP.";
+          errorMsg.classList.add("visible");
         }
       }
 
