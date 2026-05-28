@@ -1,0 +1,10 @@
+.DS_Store
+
+# Local/private VPN profiles. These contain WireGuard private keys.
+/для роутеров/
+/архив/
+
+# Legacy local copies. Public versions live in /configs.
+/neplach_routing_*.conf
+/neplach_routing_*.pdf
+/neplach_routing_karing_v*/
