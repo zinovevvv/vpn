@@ -59,7 +59,7 @@ QR-код или deeplink вида `happ://routing/onadd/...`.
 
 | Клиент | Добавить / скачать | Как использовать |
 | --- | --- | --- |
-| HAPP | [открыть страницу добавления](https://zinovevvv.github.io/vpn/happ-routing.html) / [скачать JSON](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/happ/neplach-routing.json) | нажать кнопку `Добавить в HAPP` на странице; если не открылось, скачать JSON и импортировать его как routing-профиль |
+| HAPP | [открыть страницу добавления](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html) / [скачать JSON](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/happ/neplach-routing.json) | нажать кнопку `Добавить в HAPP` на странице; если не открылось, скачать JSON и импортировать его как routing-профиль |
 | Shadowrocket | [скачать routing `.conf`](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/shadowrocket/neplach-routing.conf) | `Config` -> `+` -> `Download from URL` / `Import from URL`, затем вставить ссылку |
 | Karing | [скачать routing JSON](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json) | добавить raw-ссылку как remote rule set или импортировать скачанный JSON в custom rules |
 
