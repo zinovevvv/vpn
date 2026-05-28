@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Neplach routing для HAPP</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f6f7f9;
+        --fg: #17191c;
+        --muted: #606773;
+        --panel: #ffffff;
+        --line: #d9dee7;
+        --accent: #1769e0;
+        --accent-fg: #ffffff;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #111317;
+          --fg: #f0f3f8;
+          --muted: #aab2c0;
+          --panel: #191d23;
+          --line: #303744;
+          --accent: #7ab0ff;
+          --accent-fg: #08111f;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.5;
+      }
+
+      main {
+        width: min(100%, 560px);
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: 26px;
+        line-height: 1.2;
+      }
+
+      p {
+        margin: 0 0 18px;
+        color: var(--muted);
+      }
+
+      .actions {
+        display: grid;
+        gap: 10px;
+      }
+
+      a,
+      button {
+        min-height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font: inherit;
+        font-weight: 650;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .primary {
+        border: 0;
+        background: var(--accent);
+        color: var(--accent-fg);
+      }
+
+      .secondary {
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--fg);
+      }
+
+      .status {
+        min-height: 22px;
+        margin-top: 16px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Neplach routing для HAPP</h1>
+      <p>Кнопка добавит актуальный routing-профиль из публичного JSON.</p>
+
+      <div class="actions">
+        <a id="open-happ" class="primary" href="#" aria-disabled="true">Добавить в HAPP</a>
+        <button id="copy-link" class="secondary" type="button" disabled>Скопировать deeplink</button>
+        <a class="secondary" href="configs/happ/neplach-routing.json">Скачать JSON</a>
+      </div>
+
+      <p id="status" class="status">Готовлю ссылку...</p>
+    </main>
+
+    <script>
+      const openHapp = document.getElementById("open-happ");
+      const copyLink = document.getElementById("copy-link");
+      const status = document.getElementById("status");
+
+      function utf8Base64(value) {
+        const bytes = new TextEncoder().encode(value);
+        let binary = "";
+        for (const byte of bytes) {
+          binary += String.fromCharCode(byte);
+        }
+        return btoa(binary);
+      }
+
+      async function init() {
+        try {
+          const response = await fetch("configs/happ/neplach-routing.json", {
+            cache: "no-store"
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const profile = await response.json();
+          const deeplink = `happ://routing/onadd/${utf8Base64(JSON.stringify(profile))}`;
+
+          openHapp.href = deeplink;
+          openHapp.removeAttribute("aria-disabled");
+          copyLink.disabled = false;
+          copyLink.addEventListener("click", async () => {
+            await navigator.clipboard.writeText(deeplink);
+            status.textContent = "Deeplink скопирован.";
+          });
+          status.textContent = "Ссылка готова.";
+        } catch (error) {
+          status.textContent = "Не удалось подготовить ссылку. Скачай JSON и импортируй его в HAPP.";
+        }
+      }
+
+      init();
+    </script>
+  </body>
+</html>
