@@ -1,0 +1,135 @@
+{
+  "rules": [
+    {
+      "outbound": "proxy",
+      "name": "blocked_ru",
+      "switch": true,
+      "or": true,
+      "domain_suffix": [
+        "rutracker.org",
+        "rutracker.nl",
+        "rutor.info",
+        "nnmclub.to",
+        "meduza.io",
+        "bbc.com",
+        "dw.com"
+      ]
+    },
+    {
+      "outbound": "proxy",
+      "name": "telegram",
+      "switch": true,
+      "or": true,
+      "domain_suffix": [
+        "t.me",
+        "telegram.org",
+        "telegra.ph",
+        "tdesktop.com"
+      ],
+      "ip_cidr": [
+        "91.108.4.0/22",
+        "91.108.8.0/22",
+        "91.108.12.0/22",
+        "91.108.16.0/22",
+        "91.108.56.0/22",
+        "149.154.160.0/20"
+      ]
+    },
+    {
+      "outbound": "direct",
+      "name": "ru_whitelist",
+      "switch": true,
+      "or": true,
+      "domain_suffix": [
+        ".vk.com",
+        ".vkvideo.ru",
+
+        ".yandex.ru",
+        ".yandex.com",
+        ".maps.yandex.ru",
+        ".maps.yandex.com",
+        ".navi.yandex.ru",
+
+        ".2gis.ru",
+        ".2gis.com",
+        ".go.2gis.com",
+        ".flamp.ru",
+
+        ".tinkoff.ru",
+        ".tbank.ru",
+
+        ".sberbank.ru",
+        ".sberbank.com",
+        ".sber.ru",
+        ".online.sberbank.ru",
+        ".apps.sber.ru",
+        ".apps.sberbank.ru",
+        ".sberbusiness.ru",
+        ".sberid.ru",
+        ".sberprime.ru",
+        ".sberbank-insurance.ru",
+        ".sberinsur.ru",
+        ".sbermobile.ru",
+        ".sberdevices.ru",
+        ".sberhealth.ru",
+        ".sbercloud.ru",
+        ".cloud.ru",
+        ".domclick.ru",
+        ".sbermegamarket.ru",
+        ".megamarket.ru",
+        ".sbermarket.ru",
+        ".kuper.ru",
+        ".samokat.ru",
+        ".okko.tv",
+        ".zvuk.com",
+        ".sberlogistics.ru",
+        ".sberauto.com",
+
+        ".alfabank.ru",
+        ".alfa.ru",
+
+        ".ozon.ru",
+        ".ozon.com",
+
+        ".wildberries.ru",
+        ".wb.ru",
+
+        ".avito.ru",
+
+        ".delimobil.ru",
+        ".belkacar.ru",
+        ".citydrive.ru",
+        ".yandex-drive.ru",
+        ".drive.yandex.ru",
+        ".anytimecarsharing.ru",
+        ".youdrive.today",
+        ".rentmee.club",
+        ".lifcar.ru",
+        ".cars7.ru"
+      ]
+    },
+    {
+      "outbound": "direct",
+      "name": "local",
+      "switch": true,
+      "or": true,
+      "ip_cidr": [
+        "127.0.0.0/8",
+        "10.0.0.0/8",
+        "172.16.0.0/12",
+        "192.168.0.0/16"
+      ]
+    },
+    {
+      "outbound": "direct",
+      "name": "ru_domains",
+      "switch": true,
+      "or": true,
+      "domain_suffix": [
+        ".ru",
+        ".su",
+        ".xn--p1ai"
+      ]
+    }
+  ]
+}
