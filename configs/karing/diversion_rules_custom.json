@@ -1,4 +1,5 @@
 {
+  "_version": "v1",
   "rules": [
     {
       "outbound": "proxy",

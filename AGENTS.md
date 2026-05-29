@@ -26,12 +26,26 @@ README.md                            — публичная инструкция
 
 ## Правило синхронизации
 
-**При любом изменении списка DIRECT/PROXY нужно обновить все четыре файла:**
+**При любом изменении списка DIRECT/PROXY нужно обновить все четыре файла и поднять версию:**
 
-1. `configs/happ/neplach-routing.json` — поле `DirectSites` или `ProxySites`
+1. `configs/happ/neplach-routing.json` — поле `DirectSites` / `ProxySites` / `DirectIp` / `ProxyIp`
 2. `configs/karing/diversion_rules_custom.json` — соответствующий блок `rules`
 3. `configs/shadowrocket/neplach-routing.conf` — соответствующая секция `[Rule]`
 4. `README.md` — таблица в разделе «3. Routing-конфиги» (если исключение из правила)
+
+## Версионирование
+
+Схема: `v1`, `v2`, `v3` — простой инкремент.
+
+**При любом смысловом изменении роутинга поднять версию во всех трёх конфигах:**
+
+| Файл | Где версия |
+| --- | --- |
+| `happ/neplach-routing.json` | `"Name": "Neplach routing vN"` |
+| `karing/diversion_rules_custom.json` | `"_version": "vN"` (top-level, клиент игнорирует) |
+| `shadowrocket/neplach-routing.conf` | первая строка `# Shadowrocket RU Direct / Global Proxy vN` |
+
+Версию поднимать синхронно во всех трёх — всегда одинаковый номер.
 
 `happ-routing.html` менять не нужно — страница динамически грузит JSON из `configs/happ/`.
 
