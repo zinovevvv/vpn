@@ -73,6 +73,21 @@
     },
     {
       "outbound": "direct",
+      "name": "anydesk",
+      "switch": true,
+      "or": true,
+      "domain_suffix": [
+        "anydesk.com"
+      ],
+      "ip_cidr": [
+        "62.96.74.120/29",
+        "213.61.91.48/29",
+        "217.110.18.136/29",
+        "217.110.194.192/29"
+      ]
+    },
+    {
+      "outbound": "direct",
       "name": "local",
       "switch": true,
       "or": true,
@@ -92,7 +107,6 @@
         "neplach"
       ],
       "domain_suffix": [
-        "anydesk.com",
         "vk.com",
         "vkvideo.ru",
         "ok.ru",

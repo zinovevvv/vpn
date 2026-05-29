@@ -18,9 +18,11 @@ README.md                            — публичная инструкция
 
 ### Иностранные сервисы, которые идут напрямую (исключения)
 
-| Сервис | Домен | Причина |
-| --- | --- | --- |
-| AnyDesk | `anydesk.com` | удалённый доступ, VPN ломает relay |
+| Сервис | Домен | IP-диапазоны | Причина |
+| --- | --- | --- | --- |
+| AnyDesk | `anydesk.com` (все субдомены) | `62.96.74.120/29`, `213.61.91.48/29`, `217.110.18.136/29`, `217.110.194.192/29` | удалённый доступ; relay-серверы (~400 IP) коннектятся напрямую по IP без DNS — нужно вайтлистить и домен, и IP-диапазоны |
+
+> AnyDesk не публикует полный список relay IP (в отличие от Telegram). Четыре CIDR выше — официальная инфраструктура AnyDesk GmbH. Если всё ещё отваливается — захватить трафик Wireshark и добавить конкретные IP.
 
 ## Правило синхронизации
 
@@ -35,17 +37,36 @@ README.md                            — публичная инструкция
 
 ## Формат записей
 
-### happ (JSON)
+Если у сервиса есть и домены, и IP — нужно указать оба.
+
+### hApp (JSON)
+
+Домены → `DirectSites` / `ProxySites`:
 ```json
-"domain:anydesk.com"      // в DirectSites / ProxySites
+"domain:example.com"
+```
+IP-диапазоны → `DirectIp` / `ProxyIp`:
+```json
+"1.2.3.0/24"
 ```
 
 ### Karing (JSON)
+
+Создать отдельный блок в `rules[]` с обоими полями:
 ```json
-"domain_suffix": ["anydesk.com"]   // в нужном правиле rules[]
+{
+  "outbound": "direct",
+  "name": "example",
+  "switch": true,
+  "or": true,
+  "domain_suffix": ["example.com"],
+  "ip_cidr": ["1.2.3.0/24"]
+}
 ```
 
 ### Shadowrocket (conf)
+
 ```
-DOMAIN-SUFFIX,anydesk.com,DIRECT   // или PROXY
+DOMAIN-SUFFIX,example.com,DIRECT
+IP-CIDR,1.2.3.0/24,DIRECT,no-resolve
 ```
