@@ -252,17 +252,19 @@
 
       <!-- Hiddify -->
       <p class="app-label">Hiddify</p>
-      <a class="btn-primary" href="hiddify://import/https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/hiddify/neplach-routing.json#Neplach%20routing">Добавить в Hiddify</a>
 
-      <details id="hiddify-fallback" style="margin-top: 20px;">
-        <summary>Не открылось?</summary>
-        <div class="fallback-actions">
-          <a class="secondary" href="configs/hiddify/neplach-routing.json" download="neplach-routing.json">Скачать файл</a>
-        </div>
-        <p class="fallback-note">
-          Hiddify → Настройки → Маршрутизация → + → Из файла
-        </p>
-      </details>
+      <div class="sub-field">
+        <input
+          id="sub-url"
+          class="sub-input"
+          type="url"
+          placeholder="Ссылка на подписку (https://…)"
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </div>
+      <button id="build-hiddify" class="btn-primary" type="button">Скачать профиль Hiddify</button>
+      <p id="hiddify-status" class="status-msg"></p>
     </main>
 
     <script>
@@ -310,7 +312,87 @@
 
       initHapp();
 
-      /* ── Hiddify: кнопка — простая ссылка на скачивание, без JS ── */
+      /* ── Hiddify ── */
+
+      const buildBtn      = document.getElementById("build-hiddify");
+      const subInput      = document.getElementById("sub-url");
+      const hiddifyStatus = document.getElementById("hiddify-status");
+
+      buildBtn.addEventListener("click", async () => {
+        const subUrl = subInput.value.trim();
+
+        if (!subUrl) {
+          subInput.classList.add("error");
+          subInput.focus();
+          subInput.addEventListener("input", () => subInput.classList.remove("error"), { once: true });
+          return;
+        }
+
+        buildBtn.disabled = true;
+        buildBtn.textContent = "Генерирую…";
+        hiddifyStatus.classList.remove("visible");
+
+        try {
+          const resp = await fetch("configs/hiddify/neplach-routing.json", { cache: "no-store" });
+          if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+          const routing = await resp.json();
+
+          const config = {
+            log: { level: "warn" },
+            outbound_providers: [{
+              tag: "subscription",
+              type: "remote",
+              url: subUrl,
+              update_interval: "24h",
+              download_detour: "direct"
+            }],
+            outbounds: [
+              {
+                type: "urltest",
+                tag: "auto",
+                providers: ["subscription"],
+                outbounds: ["block"],
+                url: "http://www.gstatic.com/generate_204",
+                interval: "3m",
+                tolerance: 50
+              },
+              {
+                type: "selector",
+                tag: "proxy",
+                providers: ["subscription"],
+                outbounds: ["auto", "block"],
+                default: "auto"
+              },
+              { type: "direct", tag: "direct" },
+              { type: "block",  tag: "block"  }
+            ],
+            route: routing.route
+          };
+
+          const json    = JSON.stringify(config, null, 2);
+          const blob    = new Blob([json], { type: "application/json" });
+          const blobUrl = URL.createObjectURL(blob);
+          const dl      = document.createElement("a");
+          dl.href     = blobUrl;
+          dl.download = "neplach-hiddify.json";
+          dl.click();
+          URL.revokeObjectURL(blobUrl);
+
+          buildBtn.textContent = "Скачано ✓";
+          hiddifyStatus.textContent = "Открой Hiddify → + → Импортировать из файла → neplach-hiddify.json";
+          hiddifyStatus.classList.add("visible");
+
+        } catch {
+          buildBtn.textContent = "Ошибка — попробуй ещё раз";
+          buildBtn.disabled = false;
+          return;
+        }
+
+        setTimeout(() => {
+          buildBtn.textContent = "Скачать профиль Hiddify";
+          buildBtn.disabled = false;
+        }, 5000);
+      });
     </script>
   </body>
 </html>
