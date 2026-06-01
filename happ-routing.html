@@ -79,10 +79,9 @@
         border-top: 1px solid var(--line);
       }
 
-      /* --- главная кнопка --- */
+      /* --- кнопки --- */
 
-      #open-happ,
-      #open-hiddify {
+      .btn-primary {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -100,13 +99,57 @@
         transition: opacity 0.15s;
       }
 
-      #open-happ[aria-disabled="true"] {
+      .btn-primary[aria-disabled="true"],
+      .btn-primary:disabled {
         opacity: 0.45;
         cursor: default;
         pointer-events: none;
       }
 
-      /* --- блок «Не открылось?» --- */
+      /* --- поле ввода подписки --- */
+
+      .sub-field {
+        margin-bottom: 10px;
+      }
+
+      .sub-input {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--line);
+        background: var(--bg);
+        color: var(--fg);
+        font: inherit;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.15s;
+        -webkit-appearance: none;
+      }
+
+      .sub-input:focus {
+        border-color: var(--accent);
+      }
+
+      .sub-input::placeholder {
+        color: var(--muted);
+      }
+
+      .sub-input.error {
+        border-color: #e53e3e;
+      }
+
+      /* --- статус --- */
+
+      .status-msg {
+        margin-top: 12px;
+        font-size: 13px;
+        color: var(--muted);
+        display: none;
+      }
+
+      .status-msg.visible { display: block; }
+
+      /* --- блок «Не открылось?» / детали --- */
 
       details {
         margin-top: 20px;
@@ -167,7 +210,7 @@
 
       .secondary:hover { background: var(--accent-dim); }
 
-      /* --- статус ошибки --- */
+      /* --- статус ошибки HAPP --- */
 
       .error-msg {
         margin-top: 16px;
@@ -180,18 +223,6 @@
       }
 
       .error-msg.visible { display: block; }
-
-      /* --- фича-бейдж --- */
-
-      .feature-note {
-        margin: 14px 0 0;
-        padding: 10px 12px;
-        border-radius: 8px;
-        background: var(--accent-dim);
-        font-size: 13px;
-        color: var(--muted);
-        line-height: 1.45;
-      }
     </style>
   </head>
   <body>
@@ -199,10 +230,11 @@
       <h1>Роутинг Neplach</h1>
       <p class="subtitle">Нажми кнопку — откроется приложение и роутинг добавится автоматически.</p>
 
+      <!-- HAPP -->
       <p class="app-label">HAPP</p>
-      <a id="open-happ" href="#" aria-disabled="true">Загружаю…</a>
+      <a id="open-happ" class="btn-primary" href="#" aria-disabled="true">Загружаю…</a>
 
-      <details id="fallback" hidden>
+      <details id="happ-fallback" hidden>
         <summary>Не открылось?</summary>
         <div class="fallback-actions">
           <button id="copy-link" class="secondary" type="button">Скопировать ссылку — вставить в браузере</button>
@@ -214,24 +246,45 @@
         </p>
       </details>
 
-      <p id="error-msg" class="error-msg"></p>
+      <p id="happ-error" class="error-msg"></p>
 
       <hr class="sep">
 
+      <!-- Hiddify -->
       <p class="app-label">Hiddify</p>
-      <a id="open-hiddify" href="configs/hiddify/neplach-routing.json" download="neplach-routing.json">Скачать конфиг маршрутизации</a>
 
-      <p class="feature-note">
-        Это только правила маршрутизации — не подписка. Добавь файл в Hiddify
-        отдельно от подписки BlancVPN, через раздел настроек маршрутизации.
-      </p>
+      <div class="sub-field">
+        <input
+          id="sub-url"
+          class="sub-input"
+          type="url"
+          placeholder="Ссылка на подписку (https://…)"
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </div>
+      <button id="build-hiddify" class="btn-primary" type="button">Создать профиль Hiddify</button>
+      <p id="hiddify-status" class="status-msg"></p>
+
+      <details>
+        <summary>Только правила маршрутизации — без подписки</summary>
+        <div class="fallback-actions">
+          <a class="secondary" href="configs/hiddify/neplach-routing.json" download="neplach-routing.json">Скачать routing.json</a>
+        </div>
+        <p class="fallback-note">
+          Добавляй в Hiddify отдельно от подписки через настройки маршрутизации,<br>
+          не через «Импорт профиля».
+        </p>
+      </details>
     </main>
 
     <script>
-      const openHapp  = document.getElementById("open-happ");
-      const copyLink  = document.getElementById("copy-link");
-      const fallback  = document.getElementById("fallback");
-      const errorMsg  = document.getElementById("error-msg");
+      /* ── HAPP ── */
+
+      const openHapp   = document.getElementById("open-happ");
+      const copyLink   = document.getElementById("copy-link");
+      const happFallback = document.getElementById("happ-fallback");
+      const happError  = document.getElementById("happ-error");
 
       function utf8Base64(value) {
         const bytes = new TextEncoder().encode(value);
@@ -240,7 +293,7 @@
         return btoa(binary);
       }
 
-      async function init() {
+      async function initHapp() {
         try {
           const response = await fetch("configs/happ/neplach-routing.json", { cache: "no-store" });
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -251,8 +304,7 @@
           openHapp.href = deeplink;
           openHapp.textContent = "Добавить в HAPP";
           openHapp.removeAttribute("aria-disabled");
-
-          fallback.hidden = false;
+          happFallback.hidden = false;
 
           copyLink.addEventListener("click", async () => {
             await navigator.clipboard.writeText(deeplink);
@@ -262,14 +314,108 @@
 
         } catch {
           openHapp.textContent = "Не удалось загрузить";
-          fallback.hidden = false;
-          fallback.open  = true;
-          errorMsg.textContent = "Профиль не загрузился. Скачай JSON-файл ниже и импортируй его в HAPP.";
-          errorMsg.classList.add("visible");
+          happFallback.hidden = false;
+          happFallback.open = true;
+          happError.textContent = "Профиль не загрузился. Скачай JSON-файл ниже и импортируй его в HAPP.";
+          happError.classList.add("visible");
         }
       }
 
-      init();
+      initHapp();
+
+      /* ── Hiddify ── */
+
+      const buildBtn    = document.getElementById("build-hiddify");
+      const subInput    = document.getElementById("sub-url");
+      const hiddifyStatus = document.getElementById("hiddify-status");
+
+      buildBtn.addEventListener("click", async () => {
+        const subUrl = subInput.value.trim();
+
+        if (!subUrl) {
+          subInput.classList.add("error");
+          subInput.focus();
+          subInput.addEventListener("input", () => subInput.classList.remove("error"), { once: true });
+          return;
+        }
+
+        buildBtn.disabled = true;
+        buildBtn.textContent = "Генерирую…";
+        hiddifyStatus.classList.remove("visible");
+
+        try {
+          // Загружаем правила маршрутизации
+          const resp = await fetch("configs/hiddify/neplach-routing.json", { cache: "no-store" });
+          if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+          const routing = await resp.json();
+
+          // Собираем полный sing-box профиль
+          const config = {
+            log: { level: "warn" },
+            outbound_providers: [{
+              tag: "subscription",
+              type: "remote",
+              url: subUrl,
+              update_interval: "24h",
+              download_detour: "direct"
+            }],
+            outbounds: [
+              {
+                type: "urltest",
+                tag: "auto",
+                providers: ["subscription"],
+                url: "http://www.gstatic.com/generate_204",
+                interval: "3m",
+                tolerance: 50
+              },
+              {
+                type: "selector",
+                tag: "proxy",
+                providers: ["subscription"],
+                outbounds: ["auto"],
+                default: "auto"
+              },
+              { type: "direct", tag: "direct" },
+              { type: "block",  tag: "block"  }
+            ],
+            route: routing.route
+          };
+
+          const json = JSON.stringify(config, null, 2);
+          const b64  = utf8Base64(json);
+
+          // Попытка открыть через deeplink (data URI)
+          const deeplink = `hiddify://import/data:application/json;base64,${b64}#Neplach%20routing`;
+          const a = document.createElement("a");
+          a.href = deeplink;
+          a.click();
+
+          // Параллельно скачиваем файл как запасной вариант
+          await new Promise(r => setTimeout(r, 800));
+          const blob    = new Blob([json], { type: "application/json" });
+          const blobUrl = URL.createObjectURL(blob);
+          const dl = document.createElement("a");
+          dl.href     = blobUrl;
+          dl.download = "neplach-hiddify.json";
+          dl.click();
+          URL.revokeObjectURL(blobUrl);
+
+          buildBtn.textContent = "Готово ✓";
+          hiddifyStatus.textContent =
+            "Если Hiddify не открылся — импортируй скачанный файл: + → Импорт из файла.";
+          hiddifyStatus.classList.add("visible");
+
+        } catch {
+          buildBtn.textContent = "Ошибка — попробуй ещё раз";
+          buildBtn.disabled = false;
+          return;
+        }
+
+        setTimeout(() => {
+          buildBtn.textContent = "Создать профиль Hiddify";
+          buildBtn.disabled = false;
+        }, 5000);
+      });
     </script>
   </body>
 </html>
