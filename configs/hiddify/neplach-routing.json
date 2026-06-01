@@ -1,0 +1,174 @@
+{
+  "route": {
+    "rules": [
+      {
+        "ip_cidr": [
+          "127.0.0.0/8",
+          "10.0.0.0/8",
+          "172.16.0.0/12",
+          "192.168.0.0/16"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "domain_suffix": [
+          "telegram.org",
+          "t.me",
+          "telegra.ph",
+          "tdesktop.com"
+        ],
+        "outbound": "proxy"
+      },
+      {
+        "ip_cidr": [
+          "91.108.4.0/22",
+          "91.108.8.0/22",
+          "91.108.12.0/22",
+          "91.108.16.0/22",
+          "91.108.56.0/22",
+          "149.154.160.0/20"
+        ],
+        "outbound": "proxy"
+      },
+      {
+        "domain_suffix": [
+          "rutracker.org",
+          "rutracker.nl",
+          "rutor.info",
+          "nnmclub.to",
+          "torrentgalaxy.to",
+          "thepiratebay.org"
+        ],
+        "outbound": "proxy"
+      },
+      {
+        "domain_suffix": [
+          "meduza.io",
+          "bbc.com",
+          "bbci.co.uk",
+          "currenttime.tv",
+          "dw.com",
+          "tvrain.tv",
+          "novayagazeta.eu",
+          "theins.ru",
+          "agents.media",
+          "holod.media",
+          "istories.media",
+          "svoboda.org"
+        ],
+        "outbound": "proxy"
+      },
+      {
+        "domain_suffix": [
+          "instagram.com",
+          "cdninstagram.com",
+          "facebook.com",
+          "fb.com",
+          "fbcdn.net",
+          "messenger.com",
+          "twitter.com",
+          "x.com",
+          "t.co",
+          "twimg.com",
+          "linkedin.com",
+          "discord.com",
+          "discordapp.com",
+          "discord.gg",
+          "youtube.com",
+          "googlevideo.com",
+          "ytimg.com"
+        ],
+        "outbound": "proxy"
+      },
+      {
+        "domain_keyword": ["neplach"],
+        "outbound": "direct"
+      },
+      {
+        "domain_suffix": [
+          "anydesk.com",
+          "vk.com",
+          "vkvideo.ru",
+          "ok.ru",
+          "my.com",
+          "mail.ru",
+          "yandex.ru",
+          "ya.ru",
+          "yandex.com",
+          "yandex.net",
+          "yandex.org",
+          "yandexcloud.net",
+          "yastatic.net",
+          "yandex.st",
+          "yadi.sk",
+          "2gis.ru",
+          "2gis.com",
+          "flamp.ru",
+          "vtb.com",
+          "tbank.ru",
+          "tinkoff.ru",
+          "sberbank.com",
+          "sberbank.ru",
+          "sber.ru",
+          "sberbusiness.ru",
+          "sberid.ru",
+          "sberprime.ru",
+          "sberbank-insurance.ru",
+          "sberinsur.ru",
+          "sbermobile.ru",
+          "sberdevices.ru",
+          "sberhealth.ru",
+          "sbercloud.ru",
+          "cloud.ru",
+          "domclick.ru",
+          "sbermegamarket.ru",
+          "megamarket.ru",
+          "sbermarket.ru",
+          "kuper.ru",
+          "samokat.ru",
+          "okko.tv",
+          "zvuk.com",
+          "sberlogistics.ru",
+          "sberauto.com",
+          "alfabank.ru",
+          "alfa.ru",
+          "ozon.ru",
+          "ozon.com",
+          "wildberries.ru",
+          "wb.ru",
+          "avito.ru",
+          "aviasales.ru",
+          "aviasales.com",
+          "tutu.ru",
+          "ostrovok.ru",
+          "ostrovok.com",
+          "delimobil.ru",
+          "belkacar.ru",
+          "citydrive.ru",
+          "yandex-drive.ru",
+          "anytimecarsharing.ru",
+          "youdrive.today",
+          "rentmee.club",
+          "lifcar.ru",
+          "cars7.ru",
+          "nch-spb.com",
+          "here.com",
+          "hereapi.com",
+          "gazprom.com",
+          "rosneft.com",
+          "lukoil.com"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "domain_suffix": [".ru", ".su", ".xn--p1ai"],
+        "outbound": "direct"
+      },
+      {
+        "geoip": ["ru"],
+        "outbound": "direct"
+      }
+    ],
+    "final": "proxy"
+  }
+}

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Роутинг для HAPP — Neplach</title>
+    <title>Роутинг Neplach</title>
     <style>
       :root {
         color-scheme: light dark;
@@ -64,9 +64,25 @@
         font-size: 15px;
       }
 
+      .app-label {
+        margin: 0 0 10px;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+      }
+
+      .sep {
+        margin: 24px 0;
+        border: 0;
+        border-top: 1px solid var(--line);
+      }
+
       /* --- главная кнопка --- */
 
-      #open-happ {
+      #open-happ,
+      #open-hiddify {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -168,9 +184,10 @@
   </head>
   <body>
     <main>
-      <h1>Роутинг для HAPP</h1>
-      <p class="subtitle">Нажми кнопку — откроется HAPP и роутинг добавится автоматически.</p>
+      <h1>Роутинг Neplach</h1>
+      <p class="subtitle">Нажми кнопку — откроется приложение и роутинг добавится автоматически.</p>
 
+      <p class="app-label">HAPP</p>
       <a id="open-happ" href="#" aria-disabled="true">Загружаю…</a>
 
       <details id="fallback" hidden>
@@ -186,6 +203,22 @@
       </details>
 
       <p id="error-msg" class="error-msg"></p>
+
+      <hr class="sep">
+
+      <p class="app-label">Hiddify</p>
+      <a id="open-hiddify" href="hiddify://import/https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/hiddify/neplach-routing.json#Neplach%20routing">Добавить в Hiddify</a>
+
+      <details>
+        <summary>Не открылось?</summary>
+        <div class="fallback-actions">
+          <a class="secondary" href="configs/hiddify/neplach-routing.json">Скачать JSON-файл</a>
+        </div>
+        <p class="fallback-note">
+          Скачай файл и импортируй вручную в Hiddify:<br>
+          Настройки → Маршрутизация → Добавить профиль.
+        </p>
+      </details>
     </main>
 
     <script>
