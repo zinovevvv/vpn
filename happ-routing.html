@@ -180,6 +180,18 @@
       }
 
       .error-msg.visible { display: block; }
+
+      /* --- фича-бейдж --- */
+
+      .feature-note {
+        margin: 14px 0 0;
+        padding: 10px 12px;
+        border-radius: 8px;
+        background: var(--accent-dim);
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
     </style>
   </head>
   <body>
@@ -208,6 +220,11 @@
 
       <p class="app-label">Hiddify</p>
       <a id="open-hiddify" href="hiddify://import/https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/hiddify/neplach-routing.json#Neplach%20routing">Добавить в Hiddify</a>
+
+      <p class="feature-note">
+        Telegram использует автовыбор сервера: при недоступности одного
+        система автоматически переключается на другой из подписки — без ручного вмешательства.
+      </p>
 
       <details>
         <summary>Не открылось?</summary>

@@ -1,4 +1,14 @@
 {
+  "outbounds": [
+    {
+      "type": "urltest",
+      "tag": "telegram-auto",
+      "outbounds": ["auto", "proxy"],
+      "url": "http://www.gstatic.com/generate_204",
+      "interval": "3m",
+      "tolerance": 50
+    }
+  ],
   "route": {
     "rules": [
       {
@@ -17,7 +27,7 @@
           "telegra.ph",
           "tdesktop.com"
         ],
-        "outbound": "proxy"
+        "outbound": "telegram-auto"
       },
       {
         "ip_cidr": [
@@ -28,7 +38,7 @@
           "91.108.56.0/22",
           "149.154.160.0/20"
         ],
-        "outbound": "proxy"
+        "outbound": "telegram-auto"
       },
       {
         "domain_suffix": [
