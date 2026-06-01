@@ -8,13 +8,13 @@
 
 ## 1. Скачать приложение
 
-| Устройство | HAPP |
-| --- | --- |
-| iOS / iPadOS | [App Store Global](https://apps.apple.com/us/app/happ-proxy-utility/id6504287215) / [App Store RU](https://apps.apple.com/ru/app/happ-proxy-utility-plus/id6746188973) |
-| Android | [Google Play](https://play.google.com/store/apps/details?id=com.happproxy) / [APK с GitHub](https://github.com/Happ-proxy/happ-android/releases/latest/download/Happ.apk) |
-| Windows | [HAPP для Windows](https://github.com/Happ-proxy/happ-desktop/releases/latest/download/setup-Happ.x64.exe) |
-| macOS | [HAPP для macOS](https://github.com/Happ-proxy/happ-desktop/releases/latest/download/Happ.macOS.universal.dmg) |
-| Все платформы | [официальный GitHub HAPP](https://github.com/Happ-proxy) |
+| Устройство | HAPP | Hiddify |
+| --- | --- | --- |
+| iOS / iPadOS | [App Store Global](https://apps.apple.com/us/app/happ-proxy-utility/id6504287215) / [App Store RU](https://apps.apple.com/ru/app/happ-proxy-utility-plus/id6746188973) | [App Store](https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532) |
+| Android | [Google Play](https://play.google.com/store/apps/details?id=com.happproxy) / [APK с GitHub](https://github.com/Happ-proxy/happ-android/releases/latest/download/Happ.apk) | [Google Play](https://play.google.com/store/apps/details?id=app.hiddify.com) / [APK с GitHub](https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Android-universal.apk) |
+| Windows | [HAPP для Windows](https://github.com/Happ-proxy/happ-desktop/releases/latest/download/setup-Happ.x64.exe) | [Hiddify для Windows](https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-Windows-Setup-x64.exe) |
+| macOS | [HAPP для macOS](https://github.com/Happ-proxy/happ-desktop/releases/latest/download/Happ.macOS.universal.dmg) | [Hiddify для macOS](https://github.com/hiddify/hiddify-app/releases/latest/download/Hiddify-MacOS.dmg) |
+| Все платформы | [официальный GitHub HAPP](https://github.com/Happ-proxy) | [официальный GitHub Hiddify](https://github.com/hiddify/hiddify-app) |
 
 Дополнительные клиенты:
 
@@ -60,15 +60,15 @@ Routing-конфиг добавляется после первичной нас
 | --- | --- | --- |
 | AnyDesk | `anydesk.com` | удалённый доступ, VPN ломает работу relay |
 
-### HAPP
+### HAPP и Hiddify
 
-Открой страницу и нажми одну кнопку — роутинг добавится автоматически:
+Открой страницу и нажми нужную кнопку — роутинг добавится автоматически:
 
-**[→ Добавить роутинг в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html)**
+**[→ Добавить роутинг (HAPP / Hiddify)](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html)**
 
-Если кнопка не сработала, на странице есть раздел «Не открылось?» с двумя
-запасными способами: скопировать ссылку для ручного открытия или скачать
-JSON-файл для импорта.
+На странице две кнопки — для HAPP и для Hiddify. Если кнопка не сработала,
+есть раздел «Не открылось?» со ссылкой на скачивание JSON-файла для
+ручного импорта.
 
 ### Другие клиенты
 
@@ -78,6 +78,7 @@ JSON-файл для импорта.
 | --- | --- | --- |
 | Shadowrocket | [neplach-routing.conf](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/shadowrocket/neplach-routing.conf) | `Config` → `+` → `Download from URL`, вставить ссылку |
 | Karing | [diversion_rules_custom.json](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json) | добавить raw-ссылку как remote rule set или импортировать JSON в custom rules |
+| Hiddify | [neplach-routing.json](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/hiddify/neplach-routing.json) | кнопка на странице выше или скачать JSON и импортировать вручную |
 
 ## Безопасность
 

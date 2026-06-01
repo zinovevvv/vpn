@@ -115,6 +115,12 @@
     "domain:rentmee.club",
     "domain:lifcar.ru",
     "domain:cars7.ru",
+    "domain:nch-spb.com",
+    "domain:here.com",
+    "domain:hereapi.com",
+    "domain:gazprom.com",
+    "domain:rosneft.com",
+    "domain:lukoil.com",
     "regexp:.*\\.ru$",
     "regexp:.*\\.su$",
     "regexp:.*\\.xn--p1ai$"
@@ -139,6 +145,6 @@
   ],
   "BlockIp": [],
   "CustomRules": [],
-  "LastUpdated": 1779972089,
+  "LastUpdated": 1780272000,
   "GlobalProxy": true
 }
