@@ -258,13 +258,23 @@
           id="sub-url"
           class="sub-input"
           type="url"
-          placeholder="Ссылка на подписку — необязательно"
+          placeholder="Ссылка на подписку (https://…)"
           autocomplete="off"
           spellcheck="false"
         >
       </div>
-      <button id="build-hiddify" class="btn-primary" type="button">Добавить в Hiddify</button>
+      <button id="build-hiddify" class="btn-primary" type="button">Скачать профиль Hiddify</button>
       <p id="hiddify-status" class="status-msg"></p>
+
+      <details>
+        <summary>Только правила маршрутизации — без подписки</summary>
+        <div class="fallback-actions">
+          <a class="secondary" href="configs/hiddify/neplach-routing.json" download="neplach-routing.json">Скачать routing.json</a>
+        </div>
+        <p class="fallback-note">
+          Настройки Hiddify → Маршрутизация → + → Из файла
+        </p>
+      </details>
     </main>
 
     <script>
@@ -321,6 +331,13 @@
       buildBtn.addEventListener("click", async () => {
         const subUrl = subInput.value.trim();
 
+        if (!subUrl) {
+          subInput.classList.add("error");
+          subInput.focus();
+          subInput.addEventListener("input", () => subInput.classList.remove("error"), { once: true });
+          return;
+        }
+
         buildBtn.disabled = true;
         buildBtn.textContent = "Генерирую…";
         hiddifyStatus.classList.remove("visible");
@@ -330,69 +347,48 @@
           if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
           const routing = await resp.json();
 
-          let json, filename, deeplink;
+          const config = {
+            log: { level: "warn" },
+            outbound_providers: [{
+              tag: "subscription",
+              type: "remote",
+              url: subUrl,
+              update_interval: "24h",
+              download_detour: "direct"
+            }],
+            outbounds: [
+              {
+                type: "urltest",
+                tag: "auto",
+                providers: ["subscription"],
+                url: "http://www.gstatic.com/generate_204",
+                interval: "3m",
+                tolerance: 50
+              },
+              {
+                type: "selector",
+                tag: "proxy",
+                providers: ["subscription"],
+                outbounds: ["auto"],
+                default: "auto"
+              },
+              { type: "direct", tag: "direct" },
+              { type: "block",  tag: "block"  }
+            ],
+            route: routing.route
+          };
 
-          if (subUrl) {
-            // Полный профиль: подписка + маршрутизация
-            const config = {
-              log: { level: "warn" },
-              outbound_providers: [{
-                tag: "subscription",
-                type: "remote",
-                url: subUrl,
-                update_interval: "24h",
-                download_detour: "direct"
-              }],
-              outbounds: [
-                {
-                  type: "urltest",
-                  tag: "auto",
-                  providers: ["subscription"],
-                  url: "http://www.gstatic.com/generate_204",
-                  interval: "3m",
-                  tolerance: 50
-                },
-                {
-                  type: "selector",
-                  tag: "proxy",
-                  providers: ["subscription"],
-                  outbounds: ["auto"],
-                  default: "auto"
-                },
-                { type: "direct", tag: "direct" },
-                { type: "block",  tag: "block"  }
-              ],
-              route: routing.route
-            };
-            json     = JSON.stringify(config, null, 2);
-            filename = "neplach-hiddify.json";
-            deeplink = `hiddify://import/data:application/json;base64,${utf8Base64(json)}#Neplach%20routing`;
-          } else {
-            // Только правила маршрутизации
-            json     = JSON.stringify(routing, null, 2);
-            filename = "neplach-routing.json";
-            deeplink = `hiddify://import/data:application/json;base64,${utf8Base64(json)}#Neplach%20routing`;
-          }
-
-          // Пробуем открыть Hiddify через deeplink
-          const a = document.createElement("a");
-          a.href = deeplink;
-          a.click();
-
-          // Скачиваем файл как запасной вариант
-          await new Promise(r => setTimeout(r, 800));
+          const json    = JSON.stringify(config, null, 2);
           const blob    = new Blob([json], { type: "application/json" });
           const blobUrl = URL.createObjectURL(blob);
           const dl      = document.createElement("a");
           dl.href     = blobUrl;
-          dl.download = filename;
+          dl.download = "neplach-hiddify.json";
           dl.click();
           URL.revokeObjectURL(blobUrl);
 
-          buildBtn.textContent = "Готово ✓";
-          hiddifyStatus.textContent = subUrl
-            ? "Если Hiddify не открылся — импортируй скачанный файл: + → Импорт из файла."
-            : "Скачан файл с правилами маршрутизации. Добавь через настройки маршрутизации Hiddify.";
+          buildBtn.textContent = "Скачано ✓";
+          hiddifyStatus.textContent = "Открой Hiddify → + → Импортировать из файла → выбери neplach-hiddify.json";
           hiddifyStatus.classList.add("visible");
 
         } catch {
@@ -402,7 +398,7 @@
         }
 
         setTimeout(() => {
-          buildBtn.textContent = "Добавить в Hiddify";
+          buildBtn.textContent = "Скачать профиль Hiddify";
           buildBtn.disabled = false;
         }, 5000);
       });
