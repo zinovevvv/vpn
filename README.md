@@ -27,11 +27,11 @@
 
 ## 3. Routing-конфиги
 
-Направляет российские сайты напрямую, всё остальное через VPN. Для Hiddify дополнительно включён автовыбор сервера для Telegram.
+Направляет российские сайты напрямую, всё остальное через VPN.
 
 | Клиент | Как добавить |
 | --- | --- |
 | HAPP | [Страница настройки](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html) → «Добавить в HAPP» |
-| Hiddify | [Страница настройки](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html) → «Добавить в Hiddify» |
+| Hiddify | [Страница настройки](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html) → скачать JSON → добавить в Hiddify **отдельно от подписки** через настройки маршрутизации |
 | Shadowrocket | [neplach-routing.conf](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/shadowrocket/neplach-routing.conf) — `Config` → `+` → `Download from URL` |
 | Karing | [diversion_rules_custom.json](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json) — добавить как remote rule set |
