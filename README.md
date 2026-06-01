@@ -32,6 +32,6 @@
 | Клиент | Как добавить |
 | --- | --- |
 | HAPP | [Страница настройки](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html) → «Добавить в HAPP» |
-| Hiddify | [Страница настройки](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html) → вставить ссылку на подписку → «Добавить в Hiddify» / [routing.json](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/hiddify/neplach-routing.json) |
+| Hiddify | [Страница настройки](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html) → вставить ссылку на подписку → «Скачать профиль Hiddify» → в Hiddify: `+` → Импортировать из файла |
 | Shadowrocket | [neplach-routing.conf](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/shadowrocket/neplach-routing.conf) — `Config` → `+` → `Download from URL` |
 | Karing | [diversion_rules_custom.json](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json) — добавить как remote rule set |
