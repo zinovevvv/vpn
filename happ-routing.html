@@ -252,29 +252,8 @@
 
       <!-- Hiddify -->
       <p class="app-label">Hiddify</p>
-
-      <div class="sub-field">
-        <input
-          id="sub-url"
-          class="sub-input"
-          type="url"
-          placeholder="Ссылка на подписку (https://…)"
-          autocomplete="off"
-          spellcheck="false"
-        >
-      </div>
-      <button id="build-hiddify" class="btn-primary" type="button">Добавить в Hiddify</button>
-      <p id="hiddify-status" class="status-msg"></p>
-
-      <details>
-        <summary>Только правила маршрутизации — без подписки</summary>
-        <div class="fallback-actions">
-          <a class="secondary" href="configs/hiddify/neplach-routing.json" download="neplach-routing.json">Скачать routing.json</a>
-        </div>
-        <p class="fallback-note">
-          Настройки Hiddify → Маршрутизация → + → Из файла
-        </p>
-      </details>
+      <a class="btn-primary" href="configs/hiddify/neplach-routing.json" download="neplach-routing.json">Скачать для Hiddify</a>
+      <p class="fallback-note" style="margin-top: 12px;">Hiddify → Настройки → Маршрутизация → + → Из файла</p>
     </main>
 
     <script>
@@ -322,94 +301,7 @@
 
       initHapp();
 
-      /* ── Hiddify ── */
-
-      const buildBtn    = document.getElementById("build-hiddify");
-      const subInput    = document.getElementById("sub-url");
-      const hiddifyStatus = document.getElementById("hiddify-status");
-
-      buildBtn.addEventListener("click", async () => {
-        const subUrl = subInput.value.trim();
-
-        if (!subUrl) {
-          subInput.classList.add("error");
-          subInput.focus();
-          subInput.addEventListener("input", () => subInput.classList.remove("error"), { once: true });
-          return;
-        }
-
-        buildBtn.disabled = true;
-        buildBtn.textContent = "Генерирую…";
-        hiddifyStatus.classList.remove("visible");
-
-        try {
-          const resp = await fetch("configs/hiddify/neplach-routing.json", { cache: "no-store" });
-          if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-          const routing = await resp.json();
-
-          const config = {
-            log: { level: "warn" },
-            outbound_providers: [{
-              tag: "subscription",
-              type: "remote",
-              url: subUrl,
-              update_interval: "24h",
-              download_detour: "direct"
-            }],
-            outbounds: [
-              {
-                type: "urltest",
-                tag: "auto",
-                providers: ["subscription"],
-                url: "http://www.gstatic.com/generate_204",
-                interval: "3m",
-                tolerance: 50
-              },
-              {
-                type: "selector",
-                tag: "proxy",
-                providers: ["subscription"],
-                outbounds: ["auto"],
-                default: "auto"
-              },
-              { type: "direct", tag: "direct" },
-              { type: "block",  tag: "block"  }
-            ],
-            route: routing.route
-          };
-
-          const json = JSON.stringify(config, null, 2);
-
-          // Пробуем открыть Hiddify через deeplink
-          const a = document.createElement("a");
-          a.href = `hiddify://import/data:application/json;base64,${utf8Base64(json)}#Neplach%20routing`;
-          a.click();
-
-          // Скачиваем файл как запасной вариант
-          await new Promise(r => setTimeout(r, 800));
-          const blob    = new Blob([json], { type: "application/json" });
-          const blobUrl = URL.createObjectURL(blob);
-          const dl      = document.createElement("a");
-          dl.href     = blobUrl;
-          dl.download = "neplach-hiddify.json";
-          dl.click();
-          URL.revokeObjectURL(blobUrl);
-
-          buildBtn.textContent = "Готово ✓";
-          hiddifyStatus.textContent = "Если Hiddify не открылся — импортируй скачанный файл: + → Импортировать из файла.";
-          hiddifyStatus.classList.add("visible");
-
-        } catch {
-          buildBtn.textContent = "Ошибка — попробуй ещё раз";
-          buildBtn.disabled = false;
-          return;
-        }
-
-        setTimeout(() => {
-          buildBtn.textContent = "Добавить в Hiddify";
-          buildBtn.disabled = false;
-        }, 5000);
-      });
+      /* ── Hiddify: кнопка — простая ссылка на скачивание, без JS ── */
     </script>
   </body>
 </html>
