@@ -29,52 +29,33 @@ README.md                            — публичная инструкция
 1. `configs/happ/neplach-routing.json` — поле `DirectSites` или `ProxySites`
 2. `configs/karing/diversion_rules_custom.json` — соответствующий блок `rules`
 3. `configs/shadowrocket/neplach-routing.conf` — соответствующая секция `[Rule]`
-4. `configs/hiddify/neplach-routing.json` — нужное правило в `route.rules[]`
+4. `configs/hiddify/neplach-routing.json` — нужное правило в `route.rules[]` (конфиг хранится для будущих версий Hiddify)
 5. `README.md` — таблица в разделе «3. Routing-конфиги» (если исключение из правила)
 
 `happ-routing.html` менять не нужно — страница динамически грузит JSON из `configs/happ/`.
 
-## Hiddify-специфичная архитектура
+## Hiddify — исследование ограничений (v4.0.0 dev)
 
-Конфиг `configs/hiddify/neplach-routing.json` имеет расширенную структуру:
-кроме секции `route` он содержит секцию `outbounds` с группой **`telegram-auto`**.
+Hiddify убран из рекомендуемых клиентов, так как кастомный роутинг
+в версии 4.0.0 dev не поддерживается ни одним из проверенных способов.
 
-```json
-{
-  "outbounds": [
-    {
-      "type": "urltest",
-      "tag": "telegram-auto",
-      "outbounds": ["auto", "proxy"],
-      "url": "http://www.gstatic.com/generate_204",
-      "interval": "3m",
-      "tolerance": 50
-    }
-  ],
-  "route": { ... }
-}
-```
+### Что не работает и почему
 
-### Как это работает
+| Способ | Ошибка | Причина |
+| --- | --- | --- |
+| `hiddify://import/data:application/json;base64,...` | «Непредвиденная ошибка подключения» | data: URI не поддерживается как URL для скачивания |
+| `hiddify://import/https://<hosted-url>` | `SocketException: Connection refused (127.0.0.1)` | Hiddify скачивает профиль через свой локальный sing-box прокси; если VPN не запущен — прокси не слушает |
+| Настройки → Маршрутизация → + → Из файла | опция не существует | В Hiddify 4.0.0 раздел «Маршрутизация» содержит только переключатели (регион, блокировка рекламы, LAN) — импорта файлов нет |
+| `+` → Импортировать из файла | опция не существует | Кнопка `+` открывает только QR / Буфер обмена / Вручную — файлового импорта нет |
+| Полный sing-box профиль с `outbound_providers` + `outbounds` | `panic: index out of range [0] with length 0` в `setOutbounds/builder.go:292` | `outbound_providers` загружаются асинхронно; в момент `BuildConfig` список серверов пуст, обращение к `outbounds[0]` — паника |
+| Routing-only JSON (только `route`) через `hiddify://import/` | `[SingboxParser] unmarshal error: EOF` | Hiddify скачивает файл, SingboxParser не может разобрать конфиг без секции `outbounds` |
 
-`telegram-auto` — sing-box `urltest`, который каждые 3 минуты замеряет RTT
-через два outbound Hiddify:
-- `"auto"` — Hiddify-группа «лучший сервер из всей подписки» (сам по себе urltest по всем серверам)
-- `"proxy"` — Hiddify-группа «выбранный вручную сервер»
+### Что есть в Hiddify 4.0.0 для российских пользователей
 
-Telegram-трафик идёт через тот, у которого меньше задержка. Если один
-становится недоступен — переключение происходит автоматически в пределах
-следующего цикла проверки (≤ 3 мин).
-
-**Теги `"auto"` и `"proxy"` — стандартные для Hiddify.** Они создаются
-автоматически при добавлении любой подписки (BlancVPN или другой). Конфиг
-не хардкодит серверы — работает через динамические группы.
-
-### Что НЕ надо синхронизировать в Hiddify-конфиге
-
-- Изменение серверов/стран подписки — не требует правки конфига.
-- Секция `outbounds` в Hiddify-конфиге обновляется только при изменении
-  логики выбора (интервал, tolerance, новые группы).
+Настройки → Маршрутизация → **Регион: Россия (ru)** — встроенный bypass
+на основе `geoip:ru`. Покрывает российские IP и большинство .ru-доменов,
+но не учитывает специфичные домены из нашего списка (vk.com, yandex.net,
+nch-spb.com и т.д.).
 
 ## Формат записей
 
