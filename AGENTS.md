@@ -26,7 +26,7 @@ README.md                            — публичная инструкция
 
 **При любом изменении списка DIRECT/PROXY нужно обновить все пять файлов:**
 
-1. `configs/happ/neplach-routing.json` — поле `DirectSites` или `ProxySites`
+1. `configs/happ/neplach-routing.json` — поле `DirectSites` или `ProxySites`; обновить `"Name"` (версия `YYMM`, например `2606`) и `LastUpdated` (unix timestamp)
 2. `configs/karing/diversion_rules_custom.json` — соответствующий блок `rules`
 3. `configs/shadowrocket/neplach-routing.conf` — соответствующая секция `[Rule]`
 4. `configs/hiddify/neplach-routing.json` — нужное правило в `route.rules[]` (конфиг хранится для будущих версий Hiddify)
