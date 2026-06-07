@@ -17,18 +17,18 @@
 - [Karing для Android](https://play.google.com/store/apps/details?id=com.nebula.karing)
 - [Karing releases на GitHub](https://github.com/KaringX/karing/releases)
 
-## 2. Настройка VPN
+## 2. Настройка подключения
 
-Сначала добавь личную VPN-подписку — её выдаёт администратор.
+Сначала добавь личную подписку — её выдаёт администратор.
 
 1. Скопируй ссылку-подписку в буфер обмена.
 2. Открой HAPP → нажми `+` → добавь подписку из буфера, по QR-коду или deeplink.
-3. Разреши VPN-подключение, если система попросит.
+3. Разреши подключение, если система попросит.
 4. Выбери быстрый профиль — нормальный пинг до 100 мс.
 
 ## 3. Routing-конфиги
 
-Направляет российские сайты напрямую, всё остальное через VPN.
+Правила маршрутизации трафика: прямое подключение для российских доменов и IP, прокси для остальных.
 
 | Клиент | Как добавить |
 | --- | --- |
@@ -36,3 +36,6 @@
 | Shadowrocket | [neplach-routing.conf](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/shadowrocket/neplach-routing.conf) — `Config` → `+` → `Download from URL` |
 | Karing | [diversion_rules_custom.json](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json) — добавить как remote rule set |
 
+---
+
+*Используй в соответствии с законодательством страны пребывания. Репозиторий содержит технические правила маршрутизации сети и не предоставляет серверы или подписки.*
