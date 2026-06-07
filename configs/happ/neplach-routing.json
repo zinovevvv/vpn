@@ -98,8 +98,10 @@
     "domain:alfa.ru",
     "domain:ozon.ru",
     "domain:ozon.com",
+    "domain:ozoncdn.com",
     "domain:wildberries.ru",
     "domain:wb.ru",
+    "domain:wbstatic.net",
     "domain:avito.ru",
     "domain:aviasales.ru",
     "domain:aviasales.com",
@@ -145,6 +147,6 @@
   ],
   "BlockIp": [],
   "CustomRules": [],
-  "LastUpdated": 1780272000,
+  "LastUpdated": 1780790400,
   "GlobalProxy": true
 }
