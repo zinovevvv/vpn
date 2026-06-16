@@ -21,6 +21,7 @@
 ## Маршрутизация
 
 Российские домены и IP — напрямую, остальное — через прокси.
+Для Ozon явно добавлены `ozon.ru`, `ozon.com`, `ozoncdn.com` и `ozone.ru`.
 
 **[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html)**
 

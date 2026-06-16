@@ -99,6 +99,7 @@
     "domain:ozon.ru",
     "domain:ozon.com",
     "domain:ozoncdn.com",
+    "domain:ozone.ru",
     "domain:wildberries.ru",
     "domain:wb.ru",
     "domain:wbstatic.net",
@@ -147,6 +148,6 @@
   ],
   "BlockIp": [],
   "CustomRules": [],
-  "LastUpdated": 1780790400,
+  "LastUpdated": 1781636140,
   "GlobalProxy": true
 }
