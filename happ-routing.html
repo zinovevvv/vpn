@@ -195,7 +195,7 @@
         <summary>Не открылось?</summary>
         <div class="fallback-actions">
           <button id="copy-link" class="secondary" type="button">Скопировать ссылку — вставить в браузере</button>
-          <a class="secondary" href="configs/happ/neplach-routing.json">Скачать JSON-файл</a>
+          <a class="secondary" href="https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/happ/neplach-routing.json">Скачать JSON-файл</a>
         </div>
         <p class="fallback-note">
           Скопируй ссылку и открой её в адресной строке браузера,<br>
@@ -218,6 +218,7 @@
       const copyLink   = document.getElementById("copy-link");
       const happFallback = document.getElementById("happ-fallback");
       const happError  = document.getElementById("happ-error");
+      const routingUrl = "https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/happ/neplach-routing.json";
 
       function utf8Base64(value) {
         const bytes = new TextEncoder().encode(value);
@@ -228,7 +229,7 @@
 
       async function initHapp() {
         try {
-          const response = await fetch("configs/happ/neplach-routing.json", { cache: "no-store" });
+          const response = await fetch(routingUrl, { cache: "no-store" });
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
           const profile  = await response.json();
