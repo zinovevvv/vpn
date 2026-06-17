@@ -23,7 +23,7 @@
 Российские домены и IP — напрямую, остальное — через прокси.
 Для Ozon явно добавлены `ozon.ru`, `ozon.com`, `ozoncdn.com`, `ozone.ru`, `o3.ru`, `o3t.ru`, `o3team.ru`, `ozon-dostavka.ru` и `ngenix.net`.
 
-**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html)**
+**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=260617)**
 
 После добавления: HAPP → Настройки → Routing Rules → включи **Use routing**.
 
