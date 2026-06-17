@@ -1,5 +1,5 @@
 {
-  "Name": "Neplach routing 260616",
+  "Name": "Neplach routing 260617",
   "DomainStrategy": "IPIfNonMatch",
   "FakeDNS": false,
   "RemoteDNS": "https://1.1.1.1/dns-query",
@@ -100,6 +100,11 @@
     "domain:ozon.com",
     "domain:ozoncdn.com",
     "domain:ozone.ru",
+    "domain:o3.ru",
+    "domain:o3t.ru",
+    "domain:o3team.ru",
+    "domain:ozon-dostavka.ru",
+    "domain:ngenix.net",
     "domain:wildberries.ru",
     "domain:wb.ru",
     "domain:wbstatic.net",
@@ -148,6 +153,6 @@
   ],
   "BlockIp": [],
   "CustomRules": [],
-  "LastUpdated": 1781636140,
+  "LastUpdated": 1781679192,
   "GlobalProxy": true
 }
