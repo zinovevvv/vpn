@@ -21,9 +21,11 @@
 ## Маршрутизация
 
 Российские домены и IP — напрямую, остальное — через прокси.
-Для Ozon явно добавлены `ozon.ru`, `ozon.com`, `ozoncdn.com`, `ozone.ru`, `o3.ru`, `o3t.ru`, `o3team.ru`, `ozon-dostavka.ru` и `ngenix.net`.
+Для Ozon явно добавлены `ozon.ru`, `ozon.com`, `ozoncdn.com`, `ozonusercontent.com`, `ozone.ru`, `o3.ru`, `o3t.ru`, `o3team.ru`, `ozon-dostavka.ru` и `ngenix.net`.
+Для Avito явно добавлены `avito.ru` и `avito.st`.
+Для BelkaCar явно добавлены API и зависимости приложения: `mapi.belkacar.ru`, `sentry.belkacar.ru`, `api.cyberity.ru`, `support.cyberity.ru`, `mapbox.com`, `appmetrica.io`, `appsflyersdk.com`, `pushwoosh.com`, `belkacar-1322.firebaseio.com`, `belkacar-1322.appspot.com`, Firebase Remote Config/Installations и `app-measurement.com`.
 
-**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=260617)**
+**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=260619)**
 
 После добавления: HAPP → Настройки → Routing Rules → включи **Use routing**.
 
