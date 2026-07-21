@@ -25,9 +25,15 @@
 Для Avito явно добавлены `avito.ru` и `avito.st`.
 Для BelkaCar явно добавлены API и зависимости приложения: `mapi.belkacar.ru`, `sentry.belkacar.ru`, `api.cyberity.ru`, `support.cyberity.ru`, `mapbox.com`, `appmetrica.io`, `appsflyersdk.com`, `pushwoosh.com`, `belkacar-1322.firebaseio.com`, `belkacar-1322.appspot.com`, Firebase Remote Config/Installations и `app-measurement.com`.
 
-**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=260619)**
+**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=260721)**
 
-После добавления: HAPP → Настройки → Routing Rules → включи **Use routing**.
+Начиная с HAPP 5.1 роутинг назначается отдельно каждой подписке:
+
+1. Нажми кнопку выше и добавь профиль в HAPP.
+2. На главном экране нажми `…` у нужной подписки → **Routing**.
+3. Включи **Enable Routing**.
+4. В разделе **Connected Profiles** выбери **Neplach routing**.
+5. Оставь **Ignore Routing Import** выключенным и переподключи VPN.
 
 ---
 

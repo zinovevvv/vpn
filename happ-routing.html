@@ -45,7 +45,7 @@
       }
 
       main {
-        width: min(100%, 480px);
+        width: min(100%, 680px);
         padding: 28px;
         border: 1px solid var(--line);
         border-radius: 12px;
@@ -180,12 +180,53 @@
       }
 
       .error-msg.visible { display: block; }
+
+      /* --- инструкция для HAPP 5.1+ --- */
+
+      .setup-guide {
+        margin-top: 28px;
+        padding-top: 24px;
+        border-top: 1px solid var(--line);
+      }
+
+      .setup-guide h2 {
+        margin: 0 0 8px;
+        font-size: 19px;
+        line-height: 1.3;
+      }
+
+      .setup-guide > p {
+        margin: 0 0 16px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .setup-steps {
+        margin: 0;
+        padding-left: 24px;
+      }
+
+      .setup-steps li {
+        margin: 0 0 12px;
+        padding-left: 4px;
+      }
+
+      .setup-steps li:last-child { margin-bottom: 0; }
+
+      .setting-note {
+        margin-top: 18px;
+        padding: 12px 14px;
+        border-radius: 8px;
+        background: var(--accent-dim);
+        color: var(--fg);
+        font-size: 14px;
+      }
     </style>
   </head>
   <body>
     <main>
       <h1>Роутинг Neplach</h1>
-      <p class="subtitle">Нажми кнопку — откроется приложение и роутинг добавится автоматически.</p>
+      <p class="subtitle">Нажми кнопку — HAPP откроется и добавит профиль роутинга.</p>
 
       <!-- HAPP -->
       <p class="app-label">HAPP</p>
@@ -205,9 +246,20 @@
 
       <p id="happ-error" class="error-msg"></p>
 
-      <p class="fallback-note" style="margin-top: 14px;">
-        После добавления: HAPP → Настройки → Routing Rules → включи тумблер <strong>Use routing</strong>
-      </p>
+      <section class="setup-guide" aria-labelledby="setup-title">
+        <h2 id="setup-title">Как включить роутинг в HAPP 5.1+</h2>
+        <p>Начиная с версии 5.1 роутинг назначается отдельно каждой подписке.</p>
+        <ol class="setup-steps">
+          <li>Сначала нажми <strong>«Добавить в HAPP»</strong> выше.</li>
+          <li>На главном экране HAPP нажми <strong>…</strong> у своей подписки и выбери <strong>Routing</strong>.</li>
+          <li>Включи <strong>Enable Routing</strong>.</li>
+          <li>В разделе <strong>Connected Profiles</strong> выбери профиль <strong>Neplach routing</strong>.</li>
+          <li>Вернись на главный экран и переподключи VPN.</li>
+        </ol>
+        <div class="setting-note">
+          <strong>Ignore Routing Import</strong> оставь выключенным — иначе HAPP будет игнорировать роутинг, полученный из подписки.
+        </div>
+      </section>
 
     </main>
 
