@@ -21,13 +21,28 @@
 ## Маршрутизация
 
 Российские домены и IP — напрямую, остальное — через прокси.
-Для Ozon явно добавлены `ozon.ru`, `ozon.com`, `ozoncdn.com`, `ozonusercontent.com`, `ozone.ru`, `o3.ru`, `o3t.ru`, `o3team.ru`, `ozon-dostavka.ru` и `ngenix.net`.
+Для Ozon правила DIRECT охватывают корневые домены **и все их поддомены**, включая API, картинки и видео приложения.
+
+| Назначение | Домены DIRECT |
+| --- | --- |
+| Сайт, API, авторизация | `ozon.ru`, `ozon.com`, `ozone.ru` |
+| Ресурсы и дополнительные окружения | `ozonusercontent.com`, `ozoncdn.com`, `ozonru.me` |
+| Региональные сайты | `ozon.by`, `ozon.kz`, `ozon.com.by`, `ozon.com.kz`, `ozon.uz`, `ozon.tm` |
+| Global / Travel | `ozon.global`, `ozon.travel` |
+| Другие сервисы Ozon | `o3.ru`, `o3t.ru`, `o3team.ru`, `ozon-dostavka.ru` |
+
+Ранее добавленное исключение `ngenix.net` также сохранено; это общий CDN, не только Ozon.
+[Исследование Ozon и проверка мобильного приложения через Mac](docs/ozon-routing.md).
+
 Для Avito явно добавлены `avito.ru` и `avito.st`.
 Для BelkaCar явно добавлены API и зависимости приложения: `mapi.belkacar.ru`, `sentry.belkacar.ru`, `api.cyberity.ru`, `support.cyberity.ru`, `mapbox.com`, `appmetrica.io`, `appsflyersdk.com`, `pushwoosh.com`, `belkacar-1322.firebaseio.com`, `belkacar-1322.appspot.com`, Firebase Remote Config/Installations и `app-measurement.com`.
 
-**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=260619)**
+**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=260914)**
 
-После добавления: HAPP → Настройки → Routing Rules → включи **Use routing**.
+В актуальном HAPP роутинг назначается подписке: `…` у нужной подписки → **Routing** → **Enable Routing** → **Connected Profiles** → **Neplach routing 2609-ozon**. Дождись загрузки geofiles и переподключи VPN, затем полностью перезапусти Ozon. Новое имя профиля требует выбора нового профиля вместо старого.
+
+Для старых версий HAPP: Настройки → Routing Rules → **Use routing**.
+Для JSON-подписки с готовой конфигурацией HAPP роутинг задаёт поставщик подписки: отдельный импорт может быть недоступен.
 
 ---
 

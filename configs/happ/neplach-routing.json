@@ -1,5 +1,5 @@
 {
-  "Name": "Neplach routing 260619-avito",
+  "Name": "Neplach routing 2609-ozon",
   "GlobalProxy": true,
   "RouteOrder": "block-direct-proxy",
   "DomainStrategy": "IPIfNonMatch",
@@ -109,6 +109,15 @@
     "domain:alfa.ru",
     "domain:ozon.ru",
     "domain:ozon.com",
+    "domain:ozonru.me",
+    "domain:ozon.by",
+    "domain:ozon.kz",
+    "domain:ozon.com.by",
+    "domain:ozon.com.kz",
+    "domain:ozon.uz",
+    "domain:ozon.tm",
+    "domain:ozon.global",
+    "domain:ozon.travel",
     "domain:ozoncdn.com",
     "domain:ozonusercontent.com",
     "domain:ozone.ru",
@@ -181,5 +190,5 @@
   ],
   "BlockIp": [],
   "CustomRules": [],
-  "LastUpdated": 1781879830
+  "LastUpdated": 1789416258
 }
