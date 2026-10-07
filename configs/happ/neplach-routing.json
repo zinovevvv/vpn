@@ -1,5 +1,5 @@
 {
-  "Name": "Neplach routing 2609-ozon",
+  "Name": "Neplach routing 2610-services",
   "GlobalProxy": true,
   "RouteOrder": "block-direct-proxy",
   "DomainStrategy": "IPIfNonMatch",
@@ -129,6 +129,7 @@
     "domain:wildberries.ru",
     "domain:wb.ru",
     "domain:wbstatic.net",
+    "domain:cian.ru",
     "domain:avito.ru",
     "domain:avito.st",
     "domain:aviasales.ru",
@@ -190,5 +191,5 @@
   ],
   "BlockIp": [],
   "CustomRules": [],
-  "LastUpdated": 1789416258
+  "LastUpdated": 1791356890
 }
