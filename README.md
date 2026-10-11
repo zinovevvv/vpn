@@ -39,12 +39,19 @@
 Для Avito явно добавлены `avito.ru` и `avito.st`; для Циан — `cian.ru`, включая API на `public-api.cian.ru` и остальные поддомены. `citydrive.ru` охватывает сайт и поддомены Ситидрайва; API `api.citydrive.ru` указан явно. `city-mobil.ru` добавлен как связанный домен экосистемы Ситидрайв/Ситимобил.
 Для BelkaCar явно добавлены API и зависимости приложения: `mapi.belkacar.ru`, `sentry.belkacar.ru`, `api.cyberity.ru`, `support.cyberity.ru`, `mapbox.com`, `appmetrica.io`, `appsflyersdk.com`, `pushwoosh.com`, `belkacar-1322.firebaseio.com`, `belkacar-1322.appspot.com`, Firebase Remote Config/Installations и `app-measurement.com`.
 
-**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=261007)**
+**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=261011)**
 
-В актуальном HAPP роутинг назначается подписке: `…` у нужной подписки → **Routing** → **Enable Routing** → **Connected Profiles** → **Neplach routing 2610-services**. Дождись загрузки geofiles и переподключи VPN, затем полностью перезапусти Ozon. Новое имя профиля требует выбора нового профиля вместо старого.
+В HAPP Desktop 4.0.5+ роутинг настраивается отдельно для каждой подписки:
 
-Для старых версий HAPP: Настройки → Routing Rules → **Use routing**.
-Для JSON-подписки с готовой конфигурацией HAPP роутинг задаёт поставщик подписки: отдельный импорт может быть недоступен.
+1. Добавь профиль кнопкой выше. Если macOS открывает старую версию HAPP, [скачай импорт для Happ Desktop](https://github.com/zinovevvv/vpn/raw/refs/heads/main/happ-routing-2610-services.command?download=1) и запусти его — он адресно открывает ссылку в `/Applications/Happ Desktop.app`.
+2. На главном экране нажми `…` у обычной подписки → **Routing**.
+3. Включи **Enable Routing**.
+4. В **Connected Profiles** выбери **Neplach routing 2610-services**.
+5. Оставь **Ignore Routing Import** выключенным, дождись загрузки geofiles и переподключи VPN.
+
+JSON-подписка с готовой конфигурацией может не поддерживать отдельный HAPP-роутинг; в этом случае назначай профиль обычной подписке. После изменения маршрутов перезапусти нужное приложение.
+
+В старых версиях HAPP: **Settings → Routing Rules → Use routing**.
 
 ---
 
