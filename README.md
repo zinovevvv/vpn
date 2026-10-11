@@ -1,6 +1,17 @@
 # Neplach VPN
 
-## Приложение
+**[Открыть страницу подключения и выбора приложения](https://zinovevvv.github.io/vpn/)** · [HAPP](#роутинг-в-happ) · [Karing для Mac](#karing-для-macos)
+
+Подписку выдаёт администратор. Выбери приложение и следуй инструкции для своей платформы.
+
+| Нужно | Раздел |
+| --- | --- |
+| Быстро подключиться в HAPP | [Установка и подключение](#подключение) |
+| Настроить сайты DIRECT / PROXY в HAPP | [Роутинг в HAPP](#роутинг-в-happ) |
+| Использовать Karing на Mac с отдельными правилами | [Karing для macOS](#karing-для-macos) · [полная инструкция](CLIENTS.md#karing-macos) |
+| Посмотреть все поддерживаемые клиенты | [Другие клиенты](CLIENTS.md) |
+
+## Приложения
 
 | Платформа | Ссылка |
 | --- | --- |
@@ -9,16 +20,18 @@
 | Windows | [Скачать](https://github.com/Happ-proxy/happ-desktop/releases/latest/download/setup-Happ.x64.exe) |
 | macOS | [Скачать](https://github.com/Happ-proxy/happ-desktop/releases/latest/download/Happ.macOS.universal.dmg) |
 
-## Подключение
+**Второй вариант для macOS — [Karing](https://karing.app/download).** Он поддерживает собственные правила маршрутизации. Для установки подписки и импорта правил см. [инструкцию Karing для Mac](CLIENTS.md#karing-macos). Karing — отдельное приложение: HAPP-профиль роутинга в него импортировать не нужно.
 
-Подписку выдаёт администратор.
+## Подключение
 
 1. Скопируй ссылку-подписку в буфер обмена.
 2. HAPP → `+` → добавь подписку из буфера, по QR-коду или deeplink.
 3. Разреши подключение, если система попросит.
 4. Выбери профиль — нормальный пинг до 100 мс.
 
-## Маршрутизация
+Для Karing: добавь ссылку как новую конфигурацию через **Add Configuration** и подключись к выбранному узлу. Далее импортируй правила по инструкции ниже.
+
+## Роутинг в HAPP
 
 Российские домены и IP — напрямую, остальное — через прокси.
 Для Ozon правила DIRECT охватывают корневые домены **и все их поддомены**, включая API, картинки и видео приложения.
@@ -43,7 +56,7 @@
 
 В HAPP Desktop 4.0.5+ роутинг настраивается отдельно для каждой подписки:
 
-1. Добавь профиль кнопкой выше. Если macOS открывает старую версию HAPP, [скачай импорт для Happ Desktop](https://github.com/zinovevvv/vpn/raw/refs/heads/main/happ-routing-2610-services.command?download=1) и запусти его — он адресно открывает ссылку в `/Applications/Happ Desktop.app`.
+1. Открой страницу выше. На Mac скопируй профиль и в Happ Desktop выбери **Settings → Routing Rules → ⋯ → Import Profile from Clipboard**, затем назначь его обычной подписке. Если буфер обмена браузера недоступен, [скачай helper для Happ Desktop](https://github.com/zinovevvv/vpn/raw/refs/heads/main/happ-routing-2610-services.command?download=1): он скопирует ссылку и откроет `/Applications/Happ Desktop.app`.
 2. На главном экране нажми `…` у обычной подписки → **Routing**.
 3. Включи **Enable Routing**.
 4. В **Connected Profiles** выбери **Neplach routing 2610-services**.
@@ -53,8 +66,22 @@ JSON-подписка с готовой конфигурацией может н
 
 В старых версиях HAPP: **Settings → Routing Rules → Use routing**.
 
+## Karing для macOS
+
+Karing — отдельный VPN-клиент для Mac (macOS 12+). Скачай его с [официального сайта](https://karing.app/download), добавь подписку администратора и импортируй существующий файл правил [Karing JSON](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json).
+
+1. Скачай JSON-файл правил по ссылке выше.
+2. В Karing открой **Settings → Diversion → Diversion rules → Edit → Custom diversion group**.
+3. Открой меню `…` и выбери **Import**, затем укажи скачанный `diversion_rules_custom.json`.
+4. Подтверди импорт кнопкой сохранения. Вернись в **Diversion rules** и проверь, что импортированные группы включены с назначенными действиями `direct`, `currentSelected` и `proxy`.
+5. На главном экране выбери режим **Rule** (не **Global**), подключи профиль и переподключись после изменения правил.
+
+В режиме **Rule** доменные и IP-правила из файла направляют российские сервисы напрямую, перечисленные сервисы — через выбранный VPN-узел, а остальной трафик следует режиму и правилам конфигурации. Некоторые правила с Android package ID или Windows process name предназначены для этих платформ; на Mac применяются совпадающие доменные и IP-правила. Не импортируй HAPP JSON в Karing. Совместимость самой VPN-подписки с Karing зависит от её формата.
+
+Правила Karing поддерживаются отдельно от HAPP и хранятся в [`configs/karing/diversion_rules_custom.json`](configs/karing/diversion_rules_custom.json). При изменении списка доменов обновляй клиентские форматы согласно [AGENTS.md](AGENTS.md).
+
 ---
 
-Другие клиенты (Shadowrocket, Karing, Hiddify) — [CLIENTS.md](CLIENTS.md)
+Другие клиенты (Shadowrocket, Hiddify) — [CLIENTS.md](CLIENTS.md)
 
 *Используй в соответствии с законодательством страны пребывания. Репозиторий содержит технические правила маршрутизации сети и не предоставляет серверы или подписки.*

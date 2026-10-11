@@ -17,16 +17,25 @@
 
 ---
 
-## Karing · Android
+<a id="karing-macos"></a>
 
-[Google Play](https://play.google.com/store/apps/details?id=com.nebula.karing) · [GitHub Releases](https://github.com/KaringX/karing/releases)
+## Karing · macOS и Android
 
-**Добавить routing:**
+[Скачать для macOS](https://karing.app/download) · [GitHub Releases](https://github.com/KaringX/karing/releases) · [Google Play](https://play.google.com/store/apps/details?id=com.nebula.karing)
 
-Добавь как remote rule set, используя ссылку:
-```
-https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json
-```
+Официально поддерживается macOS 12 и новее. Сначала установи приложение и добавь подписку: **Settings → Add Configuration** → вставь ссылку подписки. Для роутинга есть также [короткая веб-инструкция](https://zinovevvv.github.io/vpn/#karing-setup).
+
+**Импортировать правила проекта:**
+
+1. [Скачай JSON с правилами Karing](https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json).
+2. В приложении открой **Settings → Diversion → Diversion rules → Edit → Custom diversion group**.
+3. Открой меню `…` → **Import**, выбери скачанный `diversion_rules_custom.json` и подтверди импорт.
+4. Вернувшись в **Diversion rules**, проверь, что группы включены и их действия назначены как в конфиге.
+5. На главном экране выбери **Rule**, подключись или переподключись к профилю.
+
+Не добавляй весь файл `diversion_rules_custom.json` как отдельный remote rule set: это файл импорта пользовательских групп. Внутри таких групп Karing поддерживает отдельные remote rule sets. В файле есть platform-specific правила с Android package ID и Windows process name; на Mac используй доменные и IP-правила.
+
+Инструкция Karing: [импорт и настройка custom diversion](https://karing.app/en/tutorial/custom-diversion), [редактор правил](https://karing.app/en/app-manual/diversion-rule-edit).
 
 ---
 

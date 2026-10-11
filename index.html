@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10131a">
+    <meta name="description" content="Инструкции Neplach VPN: HAPP и Karing для macOS, подключение подписки и настройка роутинга сайтов.">
+    <title>Neplach VPN — подключение и роутинг</title>
+    <style>
+      :root { color-scheme: light dark; --bg:#f4f6fa; --fg:#172033; --muted:#58647a; --card:#fff; --line:#dbe1eb; --accent:#365be8; --soft:#e9edff; }
+      @media(prefers-color-scheme:dark){:root{--bg:#10131a;--fg:#f1f4fb;--muted:#aab4c6;--card:#191f2a;--line:#303949;--accent:#9fb2ff;--soft:#252e48}}
+      *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+      main{width:min(100% - 32px,920px);margin:0 auto;padding:56px 0 72px}.eyebrow{color:var(--accent);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+      h1{font-size:clamp(34px,7vw,56px);line-height:1.08;letter-spacing:-.04em;margin:12px 0}.intro{color:var(--muted);font-size:18px;max-width:680px;margin:0 0 28px}
+      .jump{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 40px}.jump a,.button{display:inline-flex;justify-content:center;align-items:center;border-radius:9px;padding:10px 15px;text-decoration:none;font-weight:650}.jump a{border:1px solid var(--line);color:var(--fg);background:var(--card)}
+      .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{padding:24px;border:1px solid var(--line);border-radius:16px;background:var(--card)}.card h2{margin:0 0 8px;font-size:24px}.card p{margin:0 0 16px;color:var(--muted)}
+      .button{background:var(--accent);color:#fff}.secondary{display:inline-block;margin-left:10px;color:var(--accent);font-weight:650;text-decoration:none}
+      section{scroll-margin-top:24px;margin-top:48px}.section-title{font-size:28px;letter-spacing:-.025em;margin:0 0 10px}.lead{color:var(--muted);margin:0 0 18px}.steps{padding-left:22px}.steps li{padding:0 0 9px 4px}.note{padding:15px 17px;border-radius:10px;background:var(--soft);margin-top:18px}.file{overflow-wrap:anywhere}
+      footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}a{color:var(--accent)}
+      @media(max-width:640px){main{padding-top:36px}.grid{grid-template-columns:1fr}.card{padding:20px}.secondary{margin:12px 0 0;display:block}}
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Neplach VPN</p>
+      <h1>Подключи VPN и настрой маршруты</h1>
+      <p class="intro">Выбери приложение. HAPP использует отдельный профиль маршрутизации для обычных подписок; Karing импортирует собственные правила из проекта.</p>
+      <nav class="jump" aria-label="Быстрый переход">
+        <a href="#happ">HAPP</a><a href="#karing">Karing для Mac</a><a href="#routing">Роутинг сайтов</a><a href="https://github.com/zinovevvv/vpn/blob/main/CLIENTS.md">Другие клиенты</a>
+      </nav>
+      <div class="grid">
+        <article class="card" id="happ">
+          <h2>HAPP</h2>
+          <p>Подходит, если хочешь добавить профиль роутинга HAPP к обычной VPN-подписке.</p>
+          <a class="button" href="happ-routing.html">Открыть настройку HAPP</a>
+          <a class="secondary" href="https://github.com/zinovevvv/vpn#роутинг-в-happ">Инструкция</a>
+        </article>
+        <article class="card" id="karing">
+          <h2>Karing для macOS</h2>
+          <p>Отдельный Mac-клиент с импортом пользовательских групп роутинга из JSON проекта.</p>
+          <a class="button" href="https://karing.app/download">Скачать Karing</a>
+          <a class="secondary" href="#karing-setup">Настроить роутинг</a>
+        </article>
+      </div>
+
+      <section aria-labelledby="connect-title">
+        <h2 class="section-title" id="connect-title">Подключение</h2>
+        <p class="lead">Ссылка VPN-подписки выдаётся администратором.</p>
+        <ol class="steps">
+          <li>Скопируй ссылку подписки.</li>
+          <li>Добавь её в выбранное приложение: HAPP через `+` и буфер обмена; Karing через **Settings → Add Configuration**.</li>
+          <li>Разреши системное VPN-подключение и подключись к выбранному профилю.</li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="karing-setup-title" id="karing-setup">
+        <h2 class="section-title" id="karing-setup-title">Настроить Karing на Mac</h2>
+        <p class="lead">Скачай <a href="https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json">файл правил Karing</a> и импортируй его в приложение.</p>
+        <ol class="steps">
+          <li>В Karing открой <strong>Settings → Diversion → Diversion rules → Edit → Custom diversion group</strong>.</li>
+          <li>Нажми меню <strong>… → Import</strong>, выбери скачанный <code>diversion_rules_custom.json</code> и подтверди импорт.</li>
+          <li>Вернись в <strong>Diversion rules</strong> и проверь действия у импортированных групп: <code>direct</code>, <code>currentSelected</code> или <code>proxy</code>.</li>
+          <li>На главном экране выбери <strong>Rule</strong>, подключись к подписке и переподключись после импорта.</li>
+        </ol>
+        <div class="note">Файл импортируется как набор пользовательских групп. Это не remote rule set и не подписка. Ссылка на правила: <a class="file" href="https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/karing/diversion_rules_custom.json">скачать JSON</a>. Требуется macOS 12 или новее.</div>
+      </section>
+
+      <section aria-labelledby="route-title" id="routing">
+        <h2 class="section-title" id="route-title">Роутинг сайтов</h2>
+        <p class="lead">В проекте российские сервисы и частные сети направляются DIRECT; остальной трафик идёт через выбранный VPN-маршрут, кроме явно заданных PROXY и BLOCK правил.</p>
+        <div class="note"><strong>HAPP и JSON:</strong> если подписка содержит готовую JSON-конфигурацию и экран HAPP сообщает, что Routing недоступен, отдельный профиль HAPP к ней не применяется. Если формат подписки совместим с Karing, его правила можно импортировать отдельно; совместимость зависит от формата. Настройки и подписки остаются раздельными.</div>
+        <p><a href="https://github.com/zinovevvv/vpn#роутинг-в-happ">Как назначить профиль в HAPP</a> · <a href="#karing-setup">Инструкция Karing</a> · <a href="https://github.com/zinovevvv/vpn/blob/main/configs/karing/diversion_rules_custom.json">Файл правил Karing</a></p>
+      </section>
+      <footer>Проект публикует клиентские правила маршрутизации; VPN-серверы и ссылки подписок выдаёт администратор. <a href="https://github.com/zinovevvv/vpn">Исходный код и конфиги</a>.</footer>
+    </main>
+  </body>
+</html>
