@@ -21,19 +21,37 @@
 ## Маршрутизация
 
 Российские домены и IP — напрямую, остальное — через прокси.
-Для Ozon явно добавлены `ozon.ru`, `ozon.com`, `ozoncdn.com`, `ozonusercontent.com`, `ozone.ru`, `o3.ru`, `o3t.ru`, `o3team.ru`, `ozon-dostavka.ru` и `ngenix.net`.
-Для Avito явно добавлены `avito.ru` и `avito.st`.
+Для Ozon правила DIRECT охватывают корневые домены **и все их поддомены**, включая API, картинки и видео приложения.
+
+| Назначение | Домены DIRECT |
+| --- | --- |
+| Сайт, API, авторизация | `ozon.ru`, `ozon.com`, `ozone.ru` |
+| Ресурсы и дополнительные окружения | `ozonusercontent.com`, `ozoncdn.com`, `ozonru.me` |
+| Региональные сайты | `ozon.by`, `ozon.kz`, `ozon.com.by`, `ozon.com.kz`, `ozon.uz`, `ozon.tm` |
+| Global / Travel | `ozon.global`, `ozon.travel` |
+| Другие сервисы Ozon | `o3.ru`, `o3t.ru`, `o3team.ru`, `ozon-dostavka.ru` |
+
+Сбер и СберТех направляются напрямую, включая официальные домены СберТеха: `sbertech.ru`, `getsynapse.io`, `pmplatform.ru`, `datatracker.pro` (вместе с поддоменами).
+
+Ранее добавленное исключение `ngenix.net` также сохранено; это общий CDN, не только Ozon.
+[Исследование Ozon и проверка мобильного приложения через Mac](docs/ozon-routing.md).
+
+Для Avito явно добавлены `avito.ru` и `avito.st`; для Циан — `cian.ru`, включая API на `public-api.cian.ru` и остальные поддомены. `citydrive.ru` охватывает сайт и поддомены Ситидрайва; API `api.citydrive.ru` указан явно. `city-mobil.ru` добавлен как связанный домен экосистемы Ситидрайв/Ситимобил.
 Для BelkaCar явно добавлены API и зависимости приложения: `mapi.belkacar.ru`, `sentry.belkacar.ru`, `api.cyberity.ru`, `support.cyberity.ru`, `mapbox.com`, `appmetrica.io`, `appsflyersdk.com`, `pushwoosh.com`, `belkacar-1322.firebaseio.com`, `belkacar-1322.appspot.com`, Firebase Remote Config/Installations и `app-measurement.com`.
 
-**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=260721)**
+**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=261011)**
 
-Начиная с HAPP 5.1 роутинг назначается отдельно каждой подписке:
+В HAPP Desktop 4.0.5+ роутинг настраивается отдельно для каждой подписки:
 
-1. Нажми кнопку выше и добавь профиль в HAPP.
-2. На главном экране нажми `…` у нужной подписки → **Routing**.
+1. Добавь профиль кнопкой выше. Если macOS открывает старую версию HAPP, [скачай импорт для Happ Desktop](https://github.com/zinovevvv/vpn/raw/refs/heads/main/happ-routing-2610-services.command?download=1) и запусти его — он адресно открывает ссылку в `/Applications/Happ Desktop.app`.
+2. На главном экране нажми `…` у обычной подписки → **Routing**.
 3. Включи **Enable Routing**.
-4. В разделе **Connected Profiles** выбери **Neplach routing**.
-5. Оставь **Ignore Routing Import** выключенным и переподключи VPN.
+4. В **Connected Profiles** выбери **Neplach routing 2610-services**.
+5. Оставь **Ignore Routing Import** выключенным, дождись загрузки geofiles и переподключи VPN.
+
+JSON-подписка с готовой конфигурацией может не поддерживать отдельный HAPP-роутинг; в этом случае назначай профиль обычной подписке. После изменения маршрутов перезапусти нужное приложение.
+
+В старых версиях HAPP: **Settings → Routing Rules → Use routing**.
 
 ---
 

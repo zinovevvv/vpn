@@ -181,7 +181,7 @@
 
       .error-msg.visible { display: block; }
 
-      /* --- инструкция для HAPP 5.1+ --- */
+      /* --- инструкция для HAPP Desktop 4.0.5+ --- */
 
       .setup-guide {
         margin-top: 28px;
@@ -247,17 +247,21 @@
       <p id="happ-error" class="error-msg"></p>
 
       <section class="setup-guide" aria-labelledby="setup-title">
-        <h2 id="setup-title">Как включить роутинг в HAPP 5.1+</h2>
-        <p>Начиная с версии 5.1 роутинг назначается отдельно каждой подписке.</p>
+      <h2 id="setup-title">Как включить роутинг в HAPP</h2>
+        <p>В HAPP Desktop 4.0.5+ профиль нужно назначить подписке после импорта.</p>
         <ol class="setup-steps">
           <li>Сначала нажми <strong>«Добавить в HAPP»</strong> выше.</li>
           <li>На главном экране HAPP нажми <strong>…</strong> у своей подписки и выбери <strong>Routing</strong>.</li>
           <li>Включи <strong>Enable Routing</strong>.</li>
-          <li>В разделе <strong>Connected Profiles</strong> выбери профиль <strong>Neplach routing</strong>.</li>
+          <li>В разделе <strong>Connected Profiles</strong> выбери профиль <strong>Neplach routing 2610-services</strong>.</li>
           <li>Вернись на главный экран и переподключи VPN.</li>
         </ol>
         <div class="setting-note">
           <strong>Ignore Routing Import</strong> оставь выключенным — иначе HAPP будет игнорировать роутинг, полученный из подписки.
+        </div>
+        <div class="setting-note">
+          Для JSON-подписки отдельный HAPP-роутинг может быть недоступен. Назначай профиль обычной подписке.
+          Если macOS открывает старую HAPP, <a href="https://github.com/zinovevvv/vpn/raw/refs/heads/main/happ-routing-2610-services.command?download=1">скачай и запусти импорт для Happ Desktop</a>.
         </div>
       </section>
 
