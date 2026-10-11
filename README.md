@@ -31,6 +31,8 @@
 | Global / Travel | `ozon.global`, `ozon.travel` |
 | Другие сервисы Ozon | `o3.ru`, `o3t.ru`, `o3team.ru`, `ozon-dostavka.ru` |
 
+Сбер и СберТех направляются напрямую, включая официальные домены СберТеха: `sbertech.ru`, `getsynapse.io`, `pmplatform.ru`, `datatracker.pro` (вместе с поддоменами).
+
 Ранее добавленное исключение `ngenix.net` также сохранено; это общий CDN, не только Ozon.
 [Исследование Ozon и проверка мобильного приложения через Mac](docs/ozon-routing.md).
 

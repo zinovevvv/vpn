@@ -105,6 +105,10 @@
     "domain:zvuk.com",
     "domain:sberlogistics.ru",
     "domain:sberauto.com",
+    "domain:sbertech.ru",
+    "domain:getsynapse.io",
+    "domain:pmplatform.ru",
+    "domain:datatracker.pro",
     "domain:alfabank.ru",
     "domain:alfa.ru",
     "domain:ozon.ru",
@@ -193,5 +197,5 @@
   ],
   "BlockIp": [],
   "CustomRules": [],
-  "LastUpdated": 1791356890
+  "LastUpdated": 1791742610
 }
