@@ -31,15 +31,17 @@
 | Global / Travel | `ozon.global`, `ozon.travel` |
 | Другие сервисы Ozon | `o3.ru`, `o3t.ru`, `o3team.ru`, `ozon-dostavka.ru` |
 
+Сбер и СберТех направляются напрямую, включая официальные домены СберТеха: `sbertech.ru`, `getsynapse.io`, `pmplatform.ru`, `datatracker.pro` (вместе с поддоменами).
+
 Ранее добавленное исключение `ngenix.net` также сохранено; это общий CDN, не только Ozon.
 [Исследование Ozon и проверка мобильного приложения через Mac](docs/ozon-routing.md).
 
-Для Avito явно добавлены `avito.ru` и `avito.st`.
+Для Avito явно добавлены `avito.ru` и `avito.st`; для Циан — `cian.ru`, включая API на `public-api.cian.ru` и остальные поддомены. `citydrive.ru` охватывает сайт и поддомены Ситидрайва; API `api.citydrive.ru` указан явно. `city-mobil.ru` добавлен как связанный домен экосистемы Ситидрайв/Ситимобил.
 Для BelkaCar явно добавлены API и зависимости приложения: `mapi.belkacar.ru`, `sentry.belkacar.ru`, `api.cyberity.ru`, `support.cyberity.ru`, `mapbox.com`, `appmetrica.io`, `appsflyersdk.com`, `pushwoosh.com`, `belkacar-1322.firebaseio.com`, `belkacar-1322.appspot.com`, Firebase Remote Config/Installations и `app-measurement.com`.
 
-**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=260914)**
+**[→ Добавить routing в HAPP](https://raw.githack.com/zinovevvv/vpn/main/happ-routing.html?v=261007)**
 
-В актуальном HAPP роутинг назначается подписке: `…` у нужной подписки → **Routing** → **Enable Routing** → **Connected Profiles** → **Neplach routing 2609-ozon**. Дождись загрузки geofiles и переподключи VPN, затем полностью перезапусти Ozon. Новое имя профиля требует выбора нового профиля вместо старого.
+В актуальном HAPP роутинг назначается подписке: `…` у нужной подписки → **Routing** → **Enable Routing** → **Connected Profiles** → **Neplach routing 2610-services**. Дождись загрузки geofiles и переподключи VPN, затем полностью перезапусти Ozon. Новое имя профиля требует выбора нового профиля вместо старого.
 
 Для старых версий HAPP: Настройки → Routing Rules → **Use routing**.
 Для JSON-подписки с готовой конфигурацией HAPP роутинг задаёт поставщик подписки: отдельный импорт может быть недоступен.
