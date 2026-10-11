@@ -226,7 +226,7 @@
   <body>
     <main>
       <h1>Роутинг Neplach</h1>
-      <p class="subtitle">Нажми кнопку — HAPP откроется и добавит профиль роутинга.</p>
+      <p class="subtitle">На телефоне кнопка откроет HAPP. На Mac она скопирует ссылку для импорта в Happ Desktop.</p>
 
       <!-- HAPP -->
       <p class="app-label">HAPP</p>
@@ -235,12 +235,11 @@
       <details id="happ-fallback" hidden>
         <summary>Не открылось?</summary>
         <div class="fallback-actions">
-          <button id="copy-link" class="secondary" type="button">Скопировать ссылку — вставить в браузере</button>
-          <a class="secondary" href="https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/happ/neplach-routing.json">Скачать JSON-файл</a>
+          <button id="copy-link" class="secondary" type="button">Скопировать ссылку для импорта</button>
         </div>
         <p class="fallback-note">
-          Скопируй ссылку и открой её в адресной строке браузера,<br>
-          или скачай файл и импортируй в HAPP вручную.
+          В Happ Desktop открой <strong>Settings → Routing Rules → ⋯ → Import Profile from Clipboard</strong>,
+          затем выбери обычную подписку.
         </p>
       </details>
 
@@ -250,8 +249,10 @@
       <h2 id="setup-title">Как включить роутинг в HAPP</h2>
         <p>В HAPP Desktop 4.0.5+ профиль нужно назначить подписке после импорта.</p>
         <ol class="setup-steps">
-          <li>Сначала нажми <strong>«Добавить в HAPP»</strong> выше.</li>
-          <li>На главном экране HAPP нажми <strong>…</strong> у своей подписки и выбери <strong>Routing</strong>.</li>
+          <li>Скопируй профиль кнопкой выше. На Mac это не ссылка для адресной строки браузера.</li>
+          <li>В Happ Desktop открой <strong>Settings → Routing Rules → ⋯ → Import Profile from Clipboard</strong>.</li>
+          <li>После импорта выбери свою обычную подписку и нажми <strong>Import</strong>.</li>
+          <li>На главном экране нажми <strong>…</strong> у обычной подписки и выбери <strong>Routing</strong>.</li>
           <li>Включи <strong>Enable Routing</strong>.</li>
           <li>В разделе <strong>Connected Profiles</strong> выбери профиль <strong>Neplach routing 2610-services</strong>.</li>
           <li>Вернись на главный экран и переподключи VPN.</li>
@@ -261,7 +262,7 @@
         </div>
         <div class="setting-note">
           Для JSON-подписки отдельный HAPP-роутинг может быть недоступен. Назначай профиль обычной подписке.
-          Если macOS открывает старую HAPP, <a href="https://github.com/zinovevvv/vpn/raw/refs/heads/main/happ-routing-2610-services.command?download=1">скачай и запусти импорт для Happ Desktop</a>.
+          Если буфер обмена браузера недоступен, <a href="https://github.com/zinovevvv/vpn/raw/refs/heads/main/happ-routing-2610-services.command?download=1">скачай и запусти helper для Happ Desktop</a>: он скопирует ссылку и откроет именно это приложение.
         </div>
       </section>
 
@@ -275,6 +276,7 @@
       const happFallback = document.getElementById("happ-fallback");
       const happError  = document.getElementById("happ-error");
       const routingUrl = "https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/happ/neplach-routing.json";
+      const isMacDesktop = /Macintosh|Mac OS X/.test(navigator.userAgent) && navigator.maxTouchPoints <= 1;
 
       function utf8Base64(value) {
         const bytes = new TextEncoder().encode(value);
@@ -292,21 +294,42 @@
           const deeplink = `happ://routing/onadd/${utf8Base64(JSON.stringify(profile))}`;
 
           openHapp.href = deeplink;
-          openHapp.textContent = "Добавить в HAPP";
+          openHapp.textContent = isMacDesktop ? "Скопировать для Happ Desktop" : "Добавить в HAPP";
           openHapp.removeAttribute("aria-disabled");
           happFallback.hidden = false;
 
+          openHapp.addEventListener("click", async (event) => {
+            if (!isMacDesktop) return;
+            event.preventDefault();
+            try {
+              await navigator.clipboard.writeText(deeplink);
+              openHapp.textContent = "Ссылка скопирована ✓";
+              happError.textContent = "Теперь в Happ Desktop: Settings → Routing Rules → ⋯ → Import Profile from Clipboard. Выбери обычную подписку и подтверди импорт.";
+              happError.classList.add("visible");
+            } catch {
+              happError.textContent = "Браузер не дал доступ к буферу обмена. Нажми «Не открылось?» или запусти helper для Happ Desktop.";
+              happError.classList.add("visible");
+            }
+          });
+
           copyLink.addEventListener("click", async () => {
-            await navigator.clipboard.writeText(deeplink);
-            copyLink.textContent = "Скопировано ✓";
-            setTimeout(() => { copyLink.textContent = "Скопировать ссылку — вставить в браузере"; }, 2000);
+            try {
+              await navigator.clipboard.writeText(deeplink);
+              copyLink.textContent = "Скопировано ✓";
+              happError.textContent = "В Happ Desktop: Settings → Routing Rules → ⋯ → Import Profile from Clipboard. Выбери обычную подписку и подтверди импорт.";
+              happError.classList.add("visible");
+              setTimeout(() => { copyLink.textContent = "Скопировать ссылку для импорта"; }, 2000);
+            } catch {
+              happError.textContent = "Браузер не дал доступ к буферу обмена. Запусти helper для Happ Desktop.";
+              happError.classList.add("visible");
+            }
           });
 
         } catch {
           openHapp.textContent = "Не удалось загрузить";
           happFallback.hidden = false;
           happFallback.open = true;
-          happError.textContent = "Профиль не загрузился. Скачай JSON-файл ниже и импортируй его в HAPP.";
+          happError.textContent = "Профиль не загрузился. Проверь подключение и обнови страницу.";
           happError.classList.add("visible");
         }
       }
