@@ -181,7 +181,7 @@
 
       .error-msg.visible { display: block; }
 
-      /* --- инструкция для HAPP Desktop 4.0.5+ --- */
+      /* --- инструкции для телефона и компьютера --- */
 
       .setup-guide {
         margin-top: 28px;
@@ -237,7 +237,7 @@
         <div class="fallback-actions">
           <button id="copy-link" class="secondary" type="button">Скопировать ссылку для импорта</button>
         </div>
-        <p class="fallback-note">
+        <p class="fallback-note" id="fallback-note">
           В Happ Desktop открой <strong>Settings → Routing Rules → ⋯ → Import Profile from Clipboard</strong>,
           затем выбери обычную подписку.
         </p>
@@ -245,12 +245,26 @@
 
       <p id="happ-error" class="error-msg"></p>
 
+      <section class="setup-guide" aria-labelledby="phone-setup-title">
+        <h2 id="phone-setup-title">На телефоне — iPhone / Android</h2>
+        <ol class="setup-steps">
+          <li>Нажми <strong>«Добавить в HAPP»</strong> выше. Разреши браузеру открыть HAPP и подтверди добавление профиля.</li>
+          <li>На главном экране HAPP нажми <strong>⋯</strong> рядом со своей подпиской → <strong>Routing</strong>.</li>
+          <li>Включи <strong>Enable Routing</strong>.</li>
+          <li>В <strong>Connected Profiles</strong> выбери <strong>Neplach routing 2610-services</strong>.</li>
+          <li>Оставь <strong>Ignore Routing Import</strong> выключенным, вернись на главный экран и переподключи VPN.</li>
+        </ol>
+        <div class="setting-note">
+          В старых версиях HAPP: <strong>Settings → Routing Rules → Use routing</strong>.
+        </div>
+      </section>
+
       <section class="setup-guide" aria-labelledby="setup-title">
-      <h2 id="setup-title">Как включить роутинг в HAPP</h2>
+      <h2 id="setup-title">На компьютере — Happ Desktop</h2>
         <p>В HAPP Desktop 4.0.5+ профиль нужно назначить подписке после импорта.</p>
         <ol class="setup-steps">
-          <li>Скопируй профиль кнопкой выше. На Mac это не ссылка для адресной строки браузера.</li>
-          <li>В Happ Desktop открой <strong>Settings → Routing Rules → ⋯ → Import Profile from Clipboard</strong>.</li>
+          <li>На Mac нажми <strong>«Скопировать для Happ Desktop»</strong> выше. На Windows нажми <strong>«Добавить в HAPP»</strong>; если приложение не открылось, раскрой <strong>«Не открылось?»</strong> и скопируй ссылку для импорта.</li>
+          <li>Если скопировал ссылку, в Happ Desktop открой <strong>Settings → Routing Rules → ⋯ → Import Profile from Clipboard</strong>.</li>
           <li>После импорта выбери свою обычную подписку и нажми <strong>Import</strong>.</li>
           <li>На главном экране нажми <strong>…</strong> у обычной подписки и выбери <strong>Routing</strong>.</li>
           <li>Включи <strong>Enable Routing</strong>.</li>
@@ -276,7 +290,13 @@
       const happFallback = document.getElementById("happ-fallback");
       const happError  = document.getElementById("happ-error");
       const routingUrl = "https://raw.githubusercontent.com/zinovevvv/vpn/main/configs/happ/neplach-routing.json";
+      const isPhone = /Android|iPhone|iPad|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
       const isMacDesktop = /Macintosh|Mac OS X/.test(navigator.userAgent) && navigator.maxTouchPoints <= 1;
+
+      const importHint = isPhone
+        ? "Открой скопированную ссылку в адресной строке браузера и разреши открыть HAPP. Затем следуй инструкции для телефона ниже."
+        : "В Happ Desktop: Settings → Routing Rules → ⋯ → Import Profile from Clipboard. Выбери обычную подписку и подтверди импорт.";
+      document.getElementById("fallback-note").textContent = importHint;
 
       function utf8Base64(value) {
         const bytes = new TextEncoder().encode(value);
@@ -316,11 +336,13 @@
             try {
               await navigator.clipboard.writeText(deeplink);
               copyLink.textContent = "Скопировано ✓";
-              happError.textContent = "В Happ Desktop: Settings → Routing Rules → ⋯ → Import Profile from Clipboard. Выбери обычную подписку и подтверди импорт.";
+              happError.textContent = importHint;
               happError.classList.add("visible");
               setTimeout(() => { copyLink.textContent = "Скопировать ссылку для импорта"; }, 2000);
             } catch {
-              happError.textContent = "Браузер не дал доступ к буферу обмена. Запусти helper для Happ Desktop.";
+              happError.textContent = isPhone
+                ? "Браузер не дал доступ к буферу обмена. Попробуй кнопку «Добавить в HAPP» в Safari на iPhone или Chrome на Android."
+                : "Браузер не дал доступ к буферу обмена. На Mac запусти helper для Happ Desktop; на Windows разреши доступ к буферу или попробуй другой браузер.";
               happError.classList.add("visible");
             }
           });
