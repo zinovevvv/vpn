@@ -251,7 +251,7 @@
           <li>Нажми <strong>«Добавить в HAPP»</strong> выше. Разреши браузеру открыть HAPP и подтверди добавление профиля.</li>
           <li>На главном экране HAPP нажми <strong>⋯</strong> рядом со своей подпиской → <strong>Routing</strong>.</li>
           <li>Включи <strong>Enable Routing</strong>.</li>
-          <li>В <strong>Connected Profiles</strong> выбери <strong>Neplach routing 2610-services</strong>.</li>
+          <li>В <strong>Connected Profiles</strong> выбери <strong class="profile-name">добавленный профиль</strong>.</li>
           <li>Оставь <strong>Ignore Routing Import</strong> выключенным, вернись на главный экран и переподключи VPN.</li>
         </ol>
         <div class="setting-note">
@@ -268,7 +268,7 @@
           <li>После импорта выбери свою обычную подписку и нажми <strong>Import</strong>.</li>
           <li>На главном экране нажми <strong>…</strong> у обычной подписки и выбери <strong>Routing</strong>.</li>
           <li>Включи <strong>Enable Routing</strong>.</li>
-          <li>В разделе <strong>Connected Profiles</strong> выбери профиль <strong>Neplach routing 2610-services</strong>.</li>
+          <li>В разделе <strong>Connected Profiles</strong> выбери <strong class="profile-name">добавленный профиль</strong>.</li>
           <li>Вернись на главный экран и переподключи VPN.</li>
         </ol>
         <div class="setting-note">
@@ -311,6 +311,9 @@
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
           const profile  = await response.json();
+          document.querySelectorAll(".profile-name").forEach((element) => {
+            element.textContent = profile.Name;
+          });
           const deeplink = `happ://routing/onadd/${utf8Base64(JSON.stringify(profile))}`;
 
           openHapp.href = deeplink;

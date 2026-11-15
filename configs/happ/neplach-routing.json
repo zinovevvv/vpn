@@ -1,5 +1,5 @@
 {
-  "Name": "Neplach routing 2610-services",
+  "Name": "Neplach routing 2611-mobile-photos",
   "GlobalProxy": true,
   "RouteOrder": "block-direct-proxy",
   "DomainStrategy": "IPIfNonMatch",
@@ -136,6 +136,8 @@
     "domain:cian.ru",
     "domain:avito.ru",
     "domain:avito.st",
+    "domain:img.avito.st",
+    "domain:avito.cdnvideo.ru",
     "domain:aviasales.ru",
     "domain:aviasales.com",
     "domain:tutu.ru",
@@ -161,6 +163,7 @@
     "domain:citydrive.ru",
     "domain:city-mobil.ru",
     "domain:api.citydrive.ru",
+    "domain:cdn.citydrive.ru",
     "domain:yandex-drive.ru",
     "domain:anytimecarsharing.ru",
     "domain:youdrive.today",
@@ -197,5 +200,5 @@
   ],
   "BlockIp": [],
   "CustomRules": [],
-  "LastUpdated": 1791742610
+  "LastUpdated": 1794764882
 }
